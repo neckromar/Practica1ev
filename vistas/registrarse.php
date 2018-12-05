@@ -24,7 +24,6 @@
                            <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'nif'):"" ?></span>
                         </div>
                           
-                         
                         <div class="form-group">
                             <img src="images//student.png" /><label for="nombre">Nombre*</label>
                             <input name="nombre"   placeholder="NOMBRE" type="text" class="form-control" required/>

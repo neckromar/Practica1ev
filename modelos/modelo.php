@@ -235,18 +235,6 @@ class modelo {
             $guardar_usuario=true;
              
            
-            
-           /*
-            
-            if($guardar)
-            {
-                $_SESSION['completado']="El registro se ha completado";
-            }
-            else {
-                $_SESSION['errores']['general']="Fallo al guardar el usuario";
-            }
-    
-           */
         }
         else
         {
@@ -283,8 +271,53 @@ class modelo {
 
     return $return;
   }
-
-  public function validarlogin()
+public function validarlogininsertado()
+  {
+    
+    if(isset($_POST['acceder']))
+    {
+        //array errores
+         $errores=array();
+         
+         $usuario=$_POST['usuario'];
+         $password=$_POST['passwordlogin'];
+         
+         if(!empty($usuario) && !is_numeric($usuario) && !preg_match("/[0-9]/", $usuario))
+        {
+           $usuario_valido= true;
+        }
+        else
+        {
+            $usuario_valido= false;
+            $errores['usuario']= "<div class='alert alert-danger'>El usuario no es valido por los valores</div>";
+        }
+        if(!empty($password) && !strlen($password)<8 && preg_match("/[a-zA-Z ]/", $password) && preg_match("/[0-9]/", $password) && preg_match("/[@#-_%&^+=!?.,<>]/", $password) )
+        {
+           $password_valido= true;
+        }
+        else
+        {
+            $password_valido= false;
+            $errores['password']= '<div class="alert alert-danger">La contraseña no es valida</div>';
+        }
+        
+        $usuario_valido=false;
+        if(count($errores)==0)
+        {
+            $usuario_valido=true;
+        }
+        else
+        {
+            $_SESSION['errores']=$errores;
+             
+        }
+        
+        
+    }
+    return $usuario_valido;
+  }
+ // hace la consulta para buscar el login del usuario y la contraseña para comprobarlos y si es administrador
+  public function validarlogin($usuario,$password)
   {
        $return = [
         "correcto" => FALSE,
@@ -292,50 +325,35 @@ class modelo {
         "error" => NULL
           ];
        //compruebo si he recibido algo por el post del login
-    if(isset($_POST['acceder']))
-        {
-          $usuario= trim($_POST['usuario']);
-          $passwordlogin=$_POST['passwordlogin'];
-          
+   
          
     //Realizamos la consulta...
     try {  //Definimos la instrucción SQL  
-      $sql = "SELECT * FROM usuarios WHERE `usuariologin`=:usuario AND `usuario`='administrador';";
+      $sql = "SELECT `usuario` FROM usuarios WHERE `usuariologin`=:usuario AND `password`=:password ;";
       $query = $this->conexion->prepare($sql);
-      $query->execute(['usuario' => $usuario]);
-      
-      if ($query) 
-          {
-          $verify= password_verify($passwordlogin, $usuario['password']);
-          if($verify)
-          {
-              $resultado= true;
-              $_SESSION['usuario']=$usuario;
-              if(isset($_SESSION['error_login']))
-              {
-                  session_unset($_SESSION['error_login']);
-              }
-          }
-           else
-          {
-              $resultado=false;
-               $_SESSION['error_login']="Login incorrecto!";
-               header("Location:".$_SERVER['HTTP_REFERER']); 
-          }
-        }
-        else
-        {
-             $_SESSION['error_login']="Login incorrecto!";
-             header("Location:".$_SERVER['HTTP_REFERER']); 
-        }
+      $query->execute(['usuario' => $usuario,'password'=>$password]);
+        
+         
+          $fila = $query->fetch(PDO::FETCH_ASSOC);
+            
+             if($fila['usuario']=='administrador' || $fila['usuario']=='profesor' )
+                {
+                    $resultado=true;
+                }
+            else
+                {
+                    $resultado=false;
+                }
+                
+           
     } catch (PDOException $ex) 
             {
                  $return["error"] = $ex->getMessage();
             }
 
     
-        }
-      return $return;
+        
+      return $resultado;
   }
 
   public function insertarregistro($nif,$nombre,$apellido1,$apellido2,$password_segura,$telefonomovil,$telefonofijo,$email,$departamento,$paginaweb,$direccionblog,$cuentatwitter,$usuariologin)

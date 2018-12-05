@@ -4,7 +4,7 @@
   <head>
       
     <?php require_once 'includes/head.php'; ?>
-    
+    <?php require_once 'includes/helpers.php'; ?>
   </head>
   
   <body  >
@@ -15,16 +15,18 @@
         <div class='col-md-3'></div>
         <div class="col-md-6">
             <div class="login-box well">
-                <form action="index.php?accion=loginaceptado" method="POST">
+                <form action="index.php?accion=loginaceptado" method="POST" enctype="multipart/form-data">
                         <img  class="alineadoTextoImagen" src="images//login.png"   />
                          <br><br>
                         <div class="form-group">
                             <label for="usuario">Usuario</label>
                             <input  name="usuario" placeholder="Usuario" type="text" class="form-control" />
+                            <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'usuario'):"" ?></span>
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input name="passwordlogin"   placeholder="Password" type="password" class="form-control" />
+                            <span ><?php  echo isset($_SESSION['errores']) ?  mostrarError($_SESSION['errores'], 'password'):"" ?></span>
                         </div>
                         <div class="input-group">
                           <div class="checkbox">
@@ -42,7 +44,7 @@
                             <a  href="index.php?accion=registrarse"> Registro </a>
                         </div>
                     </form>
-                
+                <?php borrarErrores() ?>
             </div>
         </div>
         <div class='col-md-3'></div>

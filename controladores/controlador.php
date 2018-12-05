@@ -45,33 +45,42 @@ class controlador {
     //Mostramos la página de inicio 
     include_once 'vistas/registrarse.php';
   }
-   public function vistaadministrador() {
+   public function vistaaceptado() {
       $parametros = [
-        "tituloventana" => "Pagina Administrador"
+        "tituloventana" => "Bienvenido"
     ];
   
   
-    include_once 'vistas/administrador.php';
+    include_once 'vistas/vistaaceptado.php';
   }
+  
+ 
   
   
  public function loginaceptado() {
   
-    $guardar_usuario= $this->modelo->validarlogin();
-    if($guardar_usuario==true)
-     {
-        if($resultado == true)
-        {
-           
-            $this->vistaadministrador();
-            var_dump('Felicidades');
-        }
-        else
-        {
-            $this->index();
-            var_dump('Algo ha fallado');
-        }
+    $usuario_valido=$this->modelo->validarlogininsertado();
+    if($usuario_valido==true)
+     { 
+            $usuario=$_POST['usuario'];
+            $password=sha1($_POST['passwordlogin']);
+            $resultado= $this->modelo->validarlogin($usuario,$password);
+          
+             if($resultado == true)
+                {
+                     $this->vistaaceptado();
+                }
+                else
+                {
+                    $this->index();
+                }
+            
      }
+     else
+        {
+         var_dump("No se ha podido conectar");
+            $this->index();
+        }
     
   }
   
@@ -87,8 +96,7 @@ class controlador {
         $apellido1= $_POST['apellido1'] ;
         $apellido2= $_POST['apellido2'] ;
         $email= $_POST['email'] ;
-        $password= $_POST['password'] ;
-        $password_segura= password_hash($password, PASSWORD_BCRYPT, ['cost'=>4]);
+        $password= sha1($_POST['password'] );
         $telefonomovil=$_POST['telefonomovil'] ;
         $telefonofijo=$_POST['telefonofijo'] ;
         $departamento=$_POST['departamento'] ;
@@ -97,7 +105,7 @@ class controlador {
         $cuentatwitter=$_POST['cuentatwitter'] ;
         $usuariologin= $_POST['usuariologin'] ;
         
-         $resultado= $this->modelo->insertarregistro($nif, $nombre, $apellido1, $apellido2, $password_segura, $telefonomovil, $telefonofijo, $email, $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuariologin);
+         $resultado= $this->modelo->insertarregistro($nif, $nombre, $apellido1, $apellido2, $password, $telefonomovil, $telefonofijo, $email, $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuariologin);
             
         if($resultado == true)
         {
