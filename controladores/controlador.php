@@ -61,15 +61,15 @@ class controlador {
         $email= $_POST['email'] ;
         $password= $_POST['password'] ;
         $password_segura= password_hash($password, PASSWORD_BCRYPT, ['cost'=>4]);
-        $usuariologin= $_POST['usuariologin'] ;
         $telefonomovil=$_POST['telefonomovil'] ;
         $telefonofijo=$_POST['telefonofijo'] ;
         $departamento=$_POST['departamento'] ;
         $paginaweb=$_POST['paginaweb'] ;
         $direccionblog=$_POST['direccionblog'] ;
         $cuentatwitter=$_POST['cuentatwitter'] ;
+        $usuariologin= $_POST['usuariologin'] ;
         
-         $resultado= $this->modelo->insertarregistro($nif, $nombre, $apellido1, $apellido2, $password_segura,$usuariologin, $telefonomovil, $telefonofijo, $email, $departamento, $paginaweb, $direccionblog, $cuentatwitter);
+         $resultado= $this->modelo->insertarregistro($nif, $nombre, $apellido1, $apellido2, $password_segura, $telefonomovil, $telefonofijo, $email, $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuariologin);
             
         if($resultado == true)
         {

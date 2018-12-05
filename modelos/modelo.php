@@ -13,7 +13,7 @@ class modelo {
   private $host = "localhost";
   private $user = "root";
   private $pass = "";
-  private $db = "dbusuarios";
+  private $db = "bdusuarios";
 
   /**
    * Constructor de la clase que ejecutará directamente el método 'conectar()'
@@ -294,7 +294,7 @@ class modelo {
       
       try {
           
-        $sql = "INSERT INTO usuarios (`id`, `nif`, `nombre`, `apellido1`, `apellido2`, `password`, `telefonomovil`, `telefonofijo`, `email`, `departamento`, `paginaweb`, `direccionblog`, `cuentatwitter`, `usuario`, `fecharegistro`,`usuariologin`) VALUES (null,:nif,:nombre,:apellido1,:apellido2,:password_segura,:telefonomovil,:telefonofijo,:email,:departamento,:paginaweb,:direccionblog,:cuentatwitter,'profesor',CURRENT_DATE(),:usuariologin);";
+        $sql = "INSERT INTO usuarios (`id`, `nif`, `nombre`, `apellido1`, `apellido2`, `password`, `telefonomovil`, `telefonofijo`, `email`, `departamento`, `paginaweb`, `direccionblog`, `cuentatwitter`, `usuario`, `fecharegistro`, `usuariologin`) VALUES (null,:nif,:nombre,:apellido1,:apellido2,:password_segura,:telefonomovil,:telefonofijo,:email,:departamento,:paginaweb,:direccionblog,:cuentatwitter,'profesor',CURRENT_DATE(),:usuariologin);";
         $query = $this->conexion->prepare($sql);
         $query->execute(['nif' => $nif, 'nombre'=>$nombre, 'apellido1'=>$apellido1 , 'apellido2'=> $apellido2 ,'password_segura'=>$password_segura ,'telefonomovil' => $telefonomovil, 'telefonofijo'=>$telefonofijo,'email'=>$email,'departamento'=>$departamento,'paginaweb'=>$paginaweb ,'direccionblog'=>$direccionblog,'cuentatwitter'=>$cuentatwitter,'usuariologin'=>$usuariologin]);
 
