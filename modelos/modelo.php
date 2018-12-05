@@ -78,6 +78,7 @@ class modelo {
         $apellido1= $_POST['apellido1'] ;
         $apellido2= $_POST['apellido2'] ;
         $email= $_POST['email'] ;
+        $usuariologin= $_POST['usuariologin'] ;
         $password= $_POST['password'] ;
         $telefonomovil=$_POST['telefonomovil'] ;
         $telefonofijo=$_POST['telefonofijo'] ;
@@ -96,7 +97,7 @@ class modelo {
             else
             {
               $nif_valido= false;
-             $errores['nif']= '<div class="alert alert-danger">El nif no es valido'. $nif.'</div>';
+             $errores['nif']= '<div class="alert alert-danger">El nif no es valido</div>';
              }
              
           
@@ -109,7 +110,7 @@ class modelo {
         else
         {
             $nombre_valido= false;
-            $errores['nombre']= "<div class='alert alert-danger'>El nombre no es valido".$nombre."</div>";
+            $errores['nombre']= "<div class='alert alert-danger'>El nombre no es valido</div>";
         }
         
         //validar apellido1
@@ -136,7 +137,7 @@ class modelo {
         //validar email
         if(!empty($email) && !filter_var($email,FILTER_VALIDATE_EMAIL) ) 
         {
-            $errores['email']= '<div class="alert alert-danger">El email no es valido'.$email.'</div>';
+            $errores['email']= '<div class="alert alert-danger">El email no es valido</div>';
            $email_valido= true;
         }
         else
@@ -144,7 +145,16 @@ class modelo {
             $email_valido= false;
             
         }
-        
+        //validar usuariologin
+        if(!empty($usuariologin) && !is_numeric($usuariologin) && !preg_match("/[0-9]/", $usuariologin))
+        {
+           $usuariologin_valido= true;
+        }
+        else
+        {
+            $usuariologin_valido= false;
+            $errores['usuariologin']= "<div class='alert alert-danger'>El nombre de usuario para el login no es valido</div>";
+        }
         //valdiar contraseña
         if(!empty($password) && !strlen($password)<8 && preg_match("/[a-zA-Z ]/", $password) && preg_match("/[0-9]/", $password) && preg_match("/[@#-_%&^+=!?.,<>]/", $password) )
         {
@@ -274,7 +284,7 @@ class modelo {
     return $return;
   }
 
-  public function insertarregistro($nif,$nombre,$apellido1,$apellido2,$password_segura,$telefonomovil,$telefonofijo,$email,$departamento,$paginaweb,$direccionblog,$cuentatwitter)
+  public function insertarregistro($nif,$nombre,$apellido1,$apellido2,$password_segura,$telefonomovil,$telefonofijo,$email,$departamento,$paginaweb,$direccionblog,$cuentatwitter,$usuariologin)
   {
       $return = [
         "correcto" => FALSE,
@@ -284,9 +294,9 @@ class modelo {
       
       try {
           
-        $sql = "INSERT INTO usuarios (`id`, `nif`, `nombre`, `apellido1`, `apellido2`, `password`, `telefonomovil`, `telefonofijo`, `email`, `departamento`, `paginaweb`, `direccionnlog`, `cuentatwitter`, `usuario`, `fecharegistro`) VALUES (null,:nif,:nombre,:apellido1,:apellido2,:password_segura,:telefonomovil,:telefonofijo,:email,:departamento,:paginaweb,:direccionnlog,:cuentatwitter,'profesor',CURRENT_DATE());";
+        $sql = "INSERT INTO usuarios (`id`, `nif`, `nombre`, `apellido1`, `apellido2`, `password`, `telefonomovil`, `telefonofijo`, `email`, `departamento`, `paginaweb`, `direccionblog`, `cuentatwitter`, `usuario`, `fecharegistro`,`usuariologin`) VALUES (null,:nif,:nombre,:apellido1,:apellido2,:password_segura,:telefonomovil,:telefonofijo,:email,:departamento,:paginaweb,:direccionblog,:cuentatwitter,'profesor',CURRENT_DATE(),:usuariologin);";
         $query = $this->conexion->prepare($sql);
-        $query->execute(['nif' => $nif, 'nombre'=>$nombre, 'apellido1'=>$apellido1 , 'apellido2'=> $apellido2 ,'password_segura'=>$password_segura ,'telefonomovil' => $telefonomovil, 'telefonofijo'=>$telefonofijo,'email'=>$email,'departamento'=>$departamento,'paginaweb'=>$paginaweb ,'direccionnlog'=>$direccionblog,'cuentatwitter'=>$cuentatwitter]);
+        $query->execute(['nif' => $nif, 'nombre'=>$nombre, 'apellido1'=>$apellido1 , 'apellido2'=> $apellido2 ,'password_segura'=>$password_segura ,'telefonomovil' => $telefonomovil, 'telefonofijo'=>$telefonofijo,'email'=>$email,'departamento'=>$departamento,'paginaweb'=>$paginaweb ,'direccionblog'=>$direccionblog,'cuentatwitter'=>$cuentatwitter,'usuariologin'=>$usuariologin]);
 
         //Supervisamos que la consulta se realizó correctamente... 
         if ($query) {
