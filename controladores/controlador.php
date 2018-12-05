@@ -45,7 +45,35 @@ class controlador {
     //Mostramos la página de inicio 
     include_once 'vistas/registrarse.php';
   }
- 
+   public function vistaadministrador() {
+      $parametros = [
+        "tituloventana" => "Pagina Administrador"
+    ];
+  
+  
+    include_once 'vistas/administrador.php';
+  }
+  
+  
+ public function loginaceptado() {
+  
+    $guardar_usuario= $this->modelo->validarlogin();
+    if($guardar_usuario==true)
+     {
+        if($resultado == true)
+        {
+           
+            $this->vistaadministrador();
+            var_dump('Felicidades');
+        }
+        else
+        {
+            $this->index();
+            var_dump('Algo ha fallado');
+        }
+     }
+    
+  }
   
   
   public function registro()

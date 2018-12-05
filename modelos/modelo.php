@@ -201,7 +201,7 @@ class modelo {
         
         
         
-        /*  
+        /* 
         $erroresfoto=array();
             $nombreArchivo = $_FILES['imagen']['name'];
             $filesize = $_FILES['imagen']['size'];
@@ -282,6 +282,60 @@ class modelo {
     }
 
     return $return;
+  }
+
+  public function validarlogin()
+  {
+       $return = [
+        "correcto" => FALSE,
+        "datos" => NULL,
+        "error" => NULL
+          ];
+       //compruebo si he recibido algo por el post del login
+    if(isset($_POST['acceder']))
+        {
+          $usuario= trim($_POST['usuario']);
+          $passwordlogin=$_POST['passwordlogin'];
+          
+         
+    //Realizamos la consulta...
+    try {  //Definimos la instrucción SQL  
+      $sql = "SELECT * FROM usuarios WHERE `usuariologin`=:usuario AND `usuario`='administrador';";
+      $query = $this->conexion->prepare($sql);
+      $query->execute(['usuario' => $usuario]);
+      
+      if ($query) 
+          {
+          $verify= password_verify($passwordlogin, $usuario['password']);
+          if($verify)
+          {
+              $resultado= true;
+              $_SESSION['usuario']=$usuario;
+              if(isset($_SESSION['error_login']))
+              {
+                  session_unset($_SESSION['error_login']);
+              }
+          }
+           else
+          {
+              $resultado=false;
+               $_SESSION['error_login']="Login incorrecto!";
+               header("Location:".$_SERVER['HTTP_REFERER']); 
+          }
+        }
+        else
+        {
+             $_SESSION['error_login']="Login incorrecto!";
+             header("Location:".$_SERVER['HTTP_REFERER']); 
+        }
+    } catch (PDOException $ex) 
+            {
+                 $return["error"] = $ex->getMessage();
+            }
+
+    
+        }
+      return $return;
   }
 
   public function insertarregistro($nif,$nombre,$apellido1,$apellido2,$password_segura,$telefonomovil,$telefonofijo,$email,$departamento,$paginaweb,$direccionblog,$cuentatwitter,$usuariologin)
