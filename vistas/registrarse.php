@@ -19,21 +19,21 @@
                     <h3 class="panel-title">Bienvenido Por Favor Registrese </h3>
                          <br><br>
                         <div class="form-group" class="form-group required">
-                            <label for="nif" >NIF*</label>
-                            <input name='nif' placeholder="NIF" type="text" class="form-control" required/>
-                            <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'nif'):"" ?></span>
+                            <img src="images//identity.png" /> <label for="nif" >NIF*</label>
+                           <input name='nif' placeholder="NIF" type="text" class="form-control" required/>
+                           <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'nif'):"" ?></span>
                         </div>
                           
                          
                         <div class="form-group">
-                            <label for="nombre">Nombre*</label>
+                            <img src="images//student.png" /><label for="nombre">Nombre*</label>
                             <input name="nombre"   placeholder="NOMBRE" type="text" class="form-control" required/>
                             <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'nombre'):"" ?></span>
                           </div>
                         
                          
                         <div class="form-group">
-                            <label for="APELLIDO1">Apellidos*</label>
+                            <img src="images//identification.png" /><label for="APELLIDO1">Apellidos*</label>
                             <input name="apellido1"   placeholder="APELLIDO1" type="text" class="form-control" required/>
                             <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'apellido1'):"" ?></span>
                             <input name="apellido2"   placeholder="APELLIDO2" type="text" class="form-control" />
@@ -41,51 +41,58 @@
                         </div>
                          
                          <div class="form-group">
-                             <input type="hidden" name="MAX_FILE_SIZE" value="52KB" />
+                             <img src="images//photo-camera.png" /><input type="hidden" name="MAX_FILE_SIZE" value="52KB" />
                              <input type="file" name="imagen" />
                              
                          </div>
                          
+                         <div class="form-group">
+                            <img src="images//user.png" /><label for="usuario">Nombre Login*</label>
+                            <input name="usuariologin"   placeholder="USUARIO LOGIN" type="text" class="form-control" required/>
+                            <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'usuariologin'):"" ?></span>
+                          </div>
+                         
                         <div class="form-group">
-                            <label for="PASSWORD">Contraseña*</label>
+                           <img src="images//password.png" /> <label for="PASSWORD">Contraseña*</label>
                             <input name="password"   placeholder="PASSWORD" type="password" class="form-control" required/>
                              <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'password'):"" ?></span>
                         </div>
                         
                          
                         <div class="form-group">
-                            <label for="TELEFONOMOVILYFIJO">Telefono Movil Y Fijo*</label>
+                            <img src="images//cellphone.png" /><label for="TELEFONOMOVIL">Telefono Movil*</label>
                             <input name="telefonomovil"   placeholder="TELEFONO MOVIL" type="number" class="form-control" required />
-                           <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'telefonomovil'):"" ?></span>
+                            <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'telefonomovil'):"" ?></span>
+                            <img src="images//phone.png" /><label for="TELEFONOFIJO">Telefono Fijo*</label>
                             <input name="telefonofijo"   placeholder="TELEFONO FIJO" type="number" class="form-control" required/>
                            <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'telefonofijo'):"" ?></span>
                         </div>
                          
                          <div class="form-group">
-                            <label for="EMAIL">Correo*</label>
+                            <img src="images//mailbox.png" /><label for="EMAIL">Correo*</label>
                             <input name="email"   placeholder="EMAIL" type="email" class="form-control" required/>
                             <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'email'):"" ?></span>
                         </div>
                          
                          
                         <div class="form-group">
-                            <label for="DEPARTAMENTO">Departamento*</label>
+                            <img src="images//conversation.png" /><label for="DEPARTAMENTO">Departamento*</label>
                             <input name="departamento"  placeholder="DEPARTAMENTO" type="text" class="form-control" required/>
                             <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'departamento'):"" ?></span>
                         </div>
                          
                         <div class="form-group">
-                            <label for="PAGINAWEB">Página Web</label>
+                            <img src="images//www.png" /><label for="PAGINAWEB">Página Web</label>
                             <input name="paginaweb"   placeholder="PAGINAWEB" type="text" class="form-control" />
                         </div>
                         
                          <div class="form-group">
-                            <label for="DIRECCIONBLOG">Dirección del Blog</label>
+                            <img src="images//blogging.png" /><label for="DIRECCIONBLOG">Dirección del Blog</label>
                             <input name="direccionblog"  placeholder="DIRECCIONBLOG" type="text" class="form-control" />
                         </div>
                          
                          <div class="form-group">
-                            <label for="CUENTATWITTER">Cuenta Twitter</label>
+                            <img src="images//twitter.png" /><label for="CUENTATWITTER">Cuenta Twitter</label>
                             <input name="cuentatwitter"  placeholder="CUENTATWITTER" type="text" class="form-control" />
                         </div>
                         <div class="form-group">
