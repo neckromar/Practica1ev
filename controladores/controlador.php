@@ -66,14 +66,15 @@ class controlador {
             $password=sha1($_POST['passwordlogin']);
             $resultado= $this->modelo->validarlogin($usuario,$password);
           
-             if($resultado == true)
+             if($resultado['usuario'] == 'Administrador' || $resultado['usuario']=='Profesor')
                 {
+                     $_SESSION["logged"]=$resultado;
                      $this->vistaaceptado();
                 }
                 else
                 {
                     $this->index();
-                    var_dump('No existe el usuario');
+                    var_dump('El usuario no es valido');
                 }
             
      }
@@ -114,6 +115,7 @@ class controlador {
            
             $this->index();
             var_dump('Felicidades');
+            
         }
         else
         {

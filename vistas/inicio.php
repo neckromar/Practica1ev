@@ -37,6 +37,7 @@
                         </div>
                         <div class="form-group">
                             <input type="submit" class="btn btn-default btn-login-submit btn-block m-t-md" name="acceder" value="Login" />
+                             
                         </div>
                         <span class='text-center'><a href="index.php?accion=contraseñaolvidada"> Contraseña Olvidada?</a></span>
                         <div class="form-group">

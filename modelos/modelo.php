@@ -239,7 +239,8 @@ class modelo {
                     // Ya verificado que la carpeta uploads existe movemos el fichero seleccionado a dicha carpeta
                 if($dir)
                     {
-                        $nombreCompleto = $nombreArchivo.".".$extension;
+                    // le he añadido la busqueda del directorio el fotos/ para buscarlo directamente al iniciar sesion
+                        $nombreCompleto = "fotos/".$nombreArchivo.".".$extension;
                         //directorio temporal es en el queesta , se le pasa el directorio de subida y se concatena con el nombre
                         //completo que es la fecha actual un guion y el nombre mas la extension
                          $pruebaimagen= move_uploaded_file($directorioTemp,$directorioSubida.$nombreCompleto );
@@ -352,20 +353,21 @@ public function validarlogininsertado()
          
     //Realizamos la consulta...
     try {  //Definimos la instrucción SQL  
-      $sql = "SELECT `usuario` FROM usuarios WHERE `usuariologin`=:usuario AND `password`=:password ;";
+      $sql = "SELECT `usuario`,`nombre`, `apellido1`, `apellido2`,`email`, `departamento`,`foto`,`usuariologin` FROM usuarios WHERE `usuariologin`=:usuario AND `password`=:password ;";
       $query = $this->conexion->prepare($sql);
       $query->execute(['usuario' => $usuario,'password'=>$password]);
         
          
           $fila = $query->fetch(PDO::FETCH_ASSOC);
             
-             if($fila['usuario']=='administrador' || $fila['usuario']=='profesor' )
+             if($fila['usuario']=='Administrador' || $fila['usuario']=='Profesor' )
                 {
-                    $resultado=true;
+                 
+                    $resultado=$fila;
                 }
             else
                 {
-                    $resultado=false;
+                    $resultado=$fila;
                 }
                 
            
@@ -418,11 +420,11 @@ public function validarlogininsertado()
         "error" => NULL
     ];
 
-    if ($id && is_numeric($id)) {
+   
       try {
         $sql = "SELECT * FROM usuarios WHERE nombre=:nombre ";
         $query = $this->conexion->prepare($sql);
-        $query->execute(['id' => $id]);
+        $query->execute(['nombre' => $nombre]);
         //Supervisamos que la consulta se realizó correctamente... 
         if ($query) {
           $return["correcto"] = TRUE;
@@ -432,7 +434,7 @@ public function validarlogininsertado()
         $return["error"] = $ex->getMessage();
         //die();
       }
-    }
+    
 
     return $return;
   }
