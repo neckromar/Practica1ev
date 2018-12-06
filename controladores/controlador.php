@@ -73,6 +73,7 @@ class controlador {
                 else
                 {
                     $this->index();
+                    var_dump('No existe el usuario');
                 }
             
      }
@@ -89,7 +90,7 @@ class controlador {
   {
      $guardar_usuario= $this->modelo->validar();
      
-     if($guardar_usuario==true)
+     if($guardar_usuario['saber']==true)
      {
          $nif=$_POST['nif'] ;
         $nombre= $_POST['nombre'] ;
@@ -104,8 +105,9 @@ class controlador {
         $direccionblog=$_POST['direccionblog'] ;
         $cuentatwitter=$_POST['cuentatwitter'] ;
         $usuariologin= $_POST['usuariologin'] ;
+        $foto=$guardar_usuario['nombrecompleto'];
         
-         $resultado= $this->modelo->insertarregistro($nif, $nombre, $apellido1, $apellido2, $password, $telefonomovil, $telefonofijo, $email, $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuariologin);
+         $resultado= $this->modelo->insertarregistro($nif, $nombre, $apellido1, $apellido2, $password, $telefonomovil, $telefonofijo, $email, $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuariologin,$foto);
             
         if($resultado == true)
         {

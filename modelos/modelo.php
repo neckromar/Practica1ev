@@ -65,7 +65,7 @@ class modelo {
  if(isset($_POST['Registrarse']))
     {
      
-     $directorioSubida = "../fotos";
+         $directorioSubida = "../fotos/";
          $max_file_size = "51200";
          $extensionesValidas = array("jpg", "png", "gif");
          
@@ -201,40 +201,43 @@ class modelo {
         
         
         
-        /* 
-        $erroresfoto=array();
+            
             $nombreArchivo = $_FILES['imagen']['name'];
             $filesize = $_FILES['imagen']['size'];
             $directorioTemp = $_FILES['imagen']['tmp_name'];
             $tipoArchivo = $_FILES['imagen']['type'];
             $arrayArchivo = pathinfo($nombreArchivo);
-          $extension = $arrayArchivo['extension'];
+            $extension = $arrayArchivo['extension'];
             // Comprobamos la extensión del archivo
             if(!in_array($extension, $extensionesValidas)){
-                $erroresfoto[] = "La extensión del archivo no es válida o no se ha subido ningún archivo";
+                $errores['foto'] = "<div class='alert alert-danger'>La extensión del archivo no es válida o no se ha subido ningún archivo</div>";
             }
             // Comprobamos el tamaño del archivo
             if($filesize > $max_file_size){
-                $erroresfoto[] = "La imagen debe de tener un tamaño inferior a 50 kb";
+                $erroresfoto['foto'] = "<div class='alert alert-danger'>La imagen debe de tener un tamaño inferior a 50 kb</div>";
             }
             // Comprobamos y renombramos el nombre del archivo
             $nombreArchivo = $arrayArchivo['filename'];
             $nombreArchivo = preg_replace("/[^A-Z0-9._-]/i", "_", $nombreArchivo);
             $nombreArchivo = $nombreArchivo . rand(1, 100);
-            // Desplazamos el archivo si no hay errores
-            if(empty($erroresfoto)){
-                $nombreCompleto = $directorioSubida.$nombreArchivo.".".$extension;
-                move_uploaded_file($directorioTemp, $nombreCompleto);
-                print "El archivo se ha subido correctamente";
-            }
-        */
-        
-        $guardar_usuario=false;
+            
+            
+       
+        // se ha cambiado la variable que devuelve el return con varias posiciones, la del true o false como antes
+         // y el nombre del archivo para asi pasarlo por el controlador y que lo inserte en la bd
+        $guardar_usuario=array();
+         $guardar_usuario['saber']=false;
+         
         if(count($errores)==0)
         {
-            $guardar_usuario=true;
-             
-           
+            // Desplazamos el archivo si no hay errores
+                $nombreCompleto = $directorioSubida.$nombreArchivo.".".$extension;
+                move_uploaded_file($directorioTemp, $nombreCompleto);
+                
+                
+                $guardar_usuario['nombrecompleto']=$nombreCompleto;
+                $guardar_usuario['saber']=true;
+         
         }
         else
         {
@@ -249,6 +252,8 @@ class modelo {
     
     return $guardar_usuario;
   }
+  
+  
   public function listado() {
     $return = [
         "correcto" => FALSE,
@@ -356,7 +361,7 @@ public function validarlogininsertado()
       return $resultado;
   }
 
-  public function insertarregistro($nif,$nombre,$apellido1,$apellido2,$password_segura,$telefonomovil,$telefonofijo,$email,$departamento,$paginaweb,$direccionblog,$cuentatwitter,$usuariologin)
+  public function insertarregistro($nif,$nombre,$apellido1,$apellido2,$password_segura,$telefonomovil,$telefonofijo,$email,$departamento,$paginaweb,$direccionblog,$cuentatwitter,$usuariologin,$foto)
   {
       $return = [
         "correcto" => FALSE,
@@ -366,9 +371,9 @@ public function validarlogininsertado()
       
       try {
           
-        $sql = "INSERT INTO usuarios (`id`, `nif`, `nombre`, `apellido1`, `apellido2`, `password`, `telefonomovil`, `telefonofijo`, `email`, `departamento`, `paginaweb`, `direccionblog`, `cuentatwitter`, `usuario`, `fecharegistro`, `usuariologin`) VALUES (null,:nif,:nombre,:apellido1,:apellido2,:password_segura,:telefonomovil,:telefonofijo,:email,:departamento,:paginaweb,:direccionblog,:cuentatwitter,'profesor',CURRENT_DATE(),:usuariologin);";
+        $sql = "INSERT INTO usuarios (`id`, `nif`, `nombre`, `apellido1`, `apellido2`, `password`, `telefonomovil`, `telefonofijo`, `email`, `departamento`, `paginaweb`, `direccionblog`, `cuentatwitter`, `usuario`, `fecharegistro`, `usuariologin` , `foto`) VALUES (null,:nif,:nombre,:apellido1,:apellido2,:password_segura,:telefonomovil,:telefonofijo,:email,:departamento,:paginaweb,:direccionblog,:cuentatwitter,'profesor',CURRENT_DATE(),:usuariologin ,:foto);";
         $query = $this->conexion->prepare($sql);
-        $query->execute(['nif' => $nif, 'nombre'=>$nombre, 'apellido1'=>$apellido1 , 'apellido2'=> $apellido2 ,'password_segura'=>$password_segura ,'telefonomovil' => $telefonomovil, 'telefonofijo'=>$telefonofijo,'email'=>$email,'departamento'=>$departamento,'paginaweb'=>$paginaweb ,'direccionblog'=>$direccionblog,'cuentatwitter'=>$cuentatwitter,'usuariologin'=>$usuariologin]);
+        $query->execute(['nif' => $nif, 'nombre'=>$nombre, 'apellido1'=>$apellido1 , 'apellido2'=> $apellido2 ,'password_segura'=>$password_segura ,'telefonomovil' => $telefonomovil, 'telefonofijo'=>$telefonofijo,'email'=>$email,'departamento'=>$departamento,'paginaweb'=>$paginaweb ,'direccionblog'=>$direccionblog,'cuentatwitter'=>$cuentatwitter,'usuariologin'=>$usuariologin ,'foto'=>$foto]);
 
         //Supervisamos que la consulta se realizó correctamente... 
         if ($query) {

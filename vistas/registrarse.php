@@ -42,7 +42,7 @@
                          <div class="form-group">
                              <img src="images//photo-camera.png" /><input type="hidden" name="MAX_FILE_SIZE" value="52KB" />
                              <input type="file" name="imagen" />
-                             
+                             <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'foto'):"" ?></span>
                          </div>
                          
                          <div class="form-group">
