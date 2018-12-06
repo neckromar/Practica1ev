@@ -65,7 +65,7 @@ class modelo {
  if(isset($_POST['Registrarse']))
     {
      
-         $directorioSubida = "../fotos/";
+         $directorioSubida = "fotos/";
          $max_file_size = "51200";
          $extensionesValidas = array("jpg", "png", "gif");
          
@@ -219,7 +219,7 @@ class modelo {
             // Comprobamos y renombramos el nombre del archivo
             $nombreArchivo = $arrayArchivo['filename'];
             $nombreArchivo = preg_replace("/[^A-Z0-9._-]/i", "_", $nombreArchivo);
-            $nombreArchivo = $nombreArchivo . rand(1, 100);
+            $nombreArchivo = time() . "-" .$nombreArchivo;
             
             
        
@@ -230,13 +230,31 @@ class modelo {
          
         if(count($errores)==0)
         {
-            // Desplazamos el archivo si no hay errores
-                $nombreCompleto = $directorioSubida.$nombreArchivo.".".$extension;
-                move_uploaded_file($directorioTemp, $nombreCompleto);
+            // Desplazamos el archivo si no hay errores y se comprueba si existe la ruta
+                     if(!is_dir("fotos"))
+                    { 
+                         $dir = mkdir("fotos", 0777, true); 
+                    }
+                        else{ $dir = true; }
+                    // Ya verificado que la carpeta uploads existe movemos el fichero seleccionado a dicha carpeta
+                if($dir)
+                    {
+                        $nombreCompleto = $nombreArchivo.".".$extension;
+                        //directorio temporal es en el queesta , se le pasa el directorio de subida y se concatena con el nombre
+                        //completo que es la fecha actual un guion y el nombre mas la extension
+                         $pruebaimagen= move_uploaded_file($directorioTemp,$directorioSubida.$nombreCompleto );
+                         
+                     if($pruebaimagen)
+                        { 
+                            $guardar_usuario['nombrecompleto']=$nombreCompleto;
+                            $guardar_usuario['saber']=true;
                 
+                         }else{
+                             var_dump('ha fallado la subida del archivo');
+                         }
                 
-                $guardar_usuario['nombrecompleto']=$nombreCompleto;
-                $guardar_usuario['saber']=true;
+                    }
+              
          
         }
         else
