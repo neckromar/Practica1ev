@@ -243,7 +243,7 @@ class modelo {
                         $nombreCompleto = "fotos/".$nombreArchivo.".".$extension;
                         //directorio temporal es en el queesta , se le pasa el directorio de subida y se concatena con el nombre
                         //completo que es la fecha actual un guion y el nombre mas la extension
-                         $pruebaimagen= move_uploaded_file($directorioTemp,$directorioSubida.$nombreCompleto );
+                         $pruebaimagen= move_uploaded_file($directorioTemp,$nombreCompleto );
                          
                      if($pruebaimagen)
                         { 
@@ -353,14 +353,14 @@ public function validarlogininsertado()
          
     //Realizamos la consulta...
     try {  //Definimos la instrucción SQL  
-      $sql = "SELECT `usuario`,`nombre`, `apellido1`, `apellido2`,`email`, `departamento`,`foto`,`usuariologin` FROM usuarios WHERE `usuariologin`=:usuario AND `password`=:password ;";
+      $sql = "SELECT `Usuario`,`Nombre`, `Apellido1`, `Apellido2`,`Email`, `Departamento`,`Foto`,`UsuarioLogin` FROM usuarios WHERE `UsuarioLogin`=:usuario AND `Password`=:password ;";
       $query = $this->conexion->prepare($sql);
       $query->execute(['usuario' => $usuario,'password'=>$password]);
         
          
           $fila = $query->fetch(PDO::FETCH_ASSOC);
             
-             if($fila['usuario']=='Administrador' || $fila['usuario']=='Profesor' )
+             if($fila['Usuario']=='Administrador' || $fila['Usuario']=='Profesor' )
                 {
                  
                     $resultado=$fila;
@@ -391,7 +391,7 @@ public function validarlogininsertado()
       
       try {
           
-        $sql = "INSERT INTO usuarios (`id`, `nif`, `nombre`, `apellido1`, `apellido2`, `password`, `telefonomovil`, `telefonofijo`, `email`, `departamento`, `paginaweb`, `direccionblog`, `cuentatwitter`, `usuario`, `fecharegistro`, `usuariologin` , `foto`) VALUES (null,:nif,:nombre,:apellido1,:apellido2,:password_segura,:telefonomovil,:telefonofijo,:email,:departamento,:paginaweb,:direccionblog,:cuentatwitter,'profesor',CURRENT_DATE(),:usuariologin ,:foto);";
+        $sql = "INSERT INTO usuarios (`ID`, `Nif`, `Nombre`, `Apellido1`, `Apellido2`, `Password`, `Telefonomovil`, `Telefonofijo`, `Email`, `Departamento`, `Paginaweb`, `Direccionblog`, `Cuentatwitter`, `Usuario`, `FechaRegistro`, `UsuarioLogin` , `Foto`) VALUES (null,:nif,:nombre,:apellido1,:apellido2,:password_segura,:telefonomovil,:telefonofijo,:email,:departamento,:paginaweb,:direccionblog,:cuentatwitter,'profesor',CURRENT_DATE(),:usuariologin ,:foto);";
         $query = $this->conexion->prepare($sql);
         $query->execute(['nif' => $nif, 'nombre'=>$nombre, 'apellido1'=>$apellido1 , 'apellido2'=> $apellido2 ,'password_segura'=>$password_segura ,'telefonomovil' => $telefonomovil, 'telefonofijo'=>$telefonofijo,'email'=>$email,'departamento'=>$departamento,'paginaweb'=>$paginaweb ,'direccionblog'=>$direccionblog,'cuentatwitter'=>$cuentatwitter,'usuariologin'=>$usuariologin ,'foto'=>$foto]);
 

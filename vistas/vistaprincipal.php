@@ -38,7 +38,7 @@
               
               <a class="nav-link" href="index.php?accion=vistaaceptadoprofile"><i class="fas fa-user"></i> 
             <?php  if(isset($_SESSION["logged"])){
-            echo '  '.$_SESSION["logged"]["usuariologin"];}?>
+            echo '  '.$_SESSION["logged"]["UsuarioLogin"];}?>
             </a>
               
           </li>

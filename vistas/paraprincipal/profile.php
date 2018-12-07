@@ -38,7 +38,7 @@
               
               <a class="nav-link" href="index.php?accion=vistaaceptadoprofile"><i class="fas fa-user"></i> 
             <?php  if(isset($_SESSION["logged"])){
-            echo '  '.$_SESSION["logged"]["usuariologin"];}?>
+            echo '  '.$_SESSION["logged"]["UsuarioLogin"];}?>
             </a>
               
           </li>
@@ -60,12 +60,12 @@
     
                 <div class="card-body">
                     <?php  if(isset($_SESSION["logged"])){
-                         echo '<h3 class="card-title"> BIENVENIDO !!<br> '. $_SESSION["logged"]["nombre"].' '.$_SESSION["logged"]["apellido1"].'  '.$_SESSION["logged"]["apellido2"].'</h3>';
-                         echo '<img class="card-img-top" src="'.$_SESSION["logged"]["foto"] .'"  alt="Card image">';
-                         echo '<h5 class="card-text">Nombre Usuario : '.$_SESSION["logged"]["usuariologin"].'<h5>';
-                         echo '<h5 class="card-text">Permisos : '.$_SESSION["logged"]["usuario"].'<h5>';
-                         echo '<h5 class="card-text">Email : '.$_SESSION["logged"]["email"].'<h5>';
-                         echo '<h5 class="card-text">Departamento : '.$_SESSION["logged"]["departamento"].'<h5>';
+                         echo '<h3 class="card-title"> BIENVENIDO !!<br> '. $_SESSION["logged"]["Nombre"].' '.$_SESSION["logged"]["Apellido1"].'  '.$_SESSION["logged"]["Apellido2"].'</h3>';
+                         echo '<img class="card-img-top" src="'.$_SESSION["logged"]["Foto"] .'"  alt="Card image">';
+                         echo '<h5 class="card-text">Nombre Usuario : '.$_SESSION["logged"]["UsuarioLogin"].'<h5>';
+                         echo '<h5 class="card-text">Permisos : '.$_SESSION["logged"]["Usuario"].'<h5>';
+                         echo '<h5 class="card-text">Email : '.$_SESSION["logged"]["Email"].'<h5>';
+                         echo '<h5 class="card-text">Departamento : '.$_SESSION["logged"]["Departamento"].'<h5>';
                     } ?>
                 </div>
     

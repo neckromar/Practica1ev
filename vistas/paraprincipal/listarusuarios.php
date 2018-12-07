@@ -14,31 +14,31 @@
                             {
                                 echo"<tr class='table-info'>";
                                 
-                                echo"<td>".$_SESSION["listado"][$a]['id']."</td>";
-                                echo"<td>".$_SESSION["listado"][$a]["nif"]."</td>";
-                                echo"<td>".$_SESSION["listado"][$a]["nombre"]."</td>";
-                                echo"<td>".$_SESSION["listado"][$a]["apellido1"]."</td>";
-                                echo"<td>".$_SESSION["listado"][$a]["apellido2"]."</td>";
-                                if($_SESSION["logged"]['usuario']=="Profesor" ||$_SESSION["logged"]['usuario']=="profesor" )
+                                echo"<td>".$_SESSION["listado"][$a]['ID']."</td>";
+                                echo"<td>".$_SESSION["listado"][$a]["Nif"]."</td>";
+                                echo"<td>".$_SESSION["listado"][$a]["Nombre"]."</td>";
+                                echo"<td>".$_SESSION["listado"][$a]["Apellido1"]."</td>";
+                                echo"<td>".$_SESSION["listado"][$a]["Apellido2"]."</td>";
+                                if($_SESSION["logged"]['Usuario']=="Profesor" ||$_SESSION["logged"]['Usuario']=="profesor" )
                                 {
                                      echo"<td> </td>";
                                 }
                                 else
                                 {
-                                    echo"<td>".$_SESSION["listado"][$a]["password"]."</td>";
+                                    echo"<td>".$_SESSION["listado"][$a]["Password"]."</td>";
                                     
                                 }
-                                echo"<td>".$_SESSION["listado"][$a]["telefonomovil"]."</td>";
-                                echo"<td>".$_SESSION["listado"][$a]["telefonofijo"]."</td>";
-                                echo"<td>".$_SESSION["listado"][$a]["email"]."</td>";
-                                echo"<td>".$_SESSION["listado"][$a]["departamento"]."</td>";
-                                echo"<td>".$_SESSION["listado"][$a]["paginaweb"]."</td>";
-                                echo"<td>".$_SESSION["listado"][$a]["direccionblog"]."</td>";
-                                echo"<td>".$_SESSION["listado"][$a]["cuentatwitter"]."</td>";
-                                echo"<td>".$_SESSION["listado"][$a]["usuario"]."</td>";
-                                echo"<td>".$_SESSION["listado"][$a]["fecharegistro"]."</td>";
-                                echo"<td>".$_SESSION["listado"][$a]["usuariologin"]."</td>";
-                                echo"<td>".$_SESSION["listado"][$a]["foto"]."</td>";
+                                echo"<td>".$_SESSION["listado"][$a]["Telefonomovil"]."</td>";
+                                echo"<td>".$_SESSION["listado"][$a]["Telefonofijo"]."</td>";
+                                echo"<td>".$_SESSION["listado"][$a]["Email"]."</td>";
+                                echo"<td>".$_SESSION["listado"][$a]["Departamento"]."</td>";
+                                echo"<td>".$_SESSION["listado"][$a]["Paginaweb"]."</td>";
+                                echo"<td>".$_SESSION["listado"][$a]["Direccionblog"]."</td>";
+                                echo"<td>".$_SESSION["listado"][$a]["Cuentatwitter"]."</td>";
+                                echo"<td>".$_SESSION["listado"][$a]["Usuario"]."</td>";
+                                echo"<td>".$_SESSION["listado"][$a]["FechaRegistro"]."</td>";
+                                echo"<td>".$_SESSION["listado"][$a]["UsuarioLogin"]."</td>";
+                                echo"<td>".$_SESSION["listado"][$a]["Foto"]."</td>";
                                 
                                
                                 echo"</tr>";
