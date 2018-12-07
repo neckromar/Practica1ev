@@ -34,6 +34,7 @@ class controlador {
     $parametros = [
         "tituloventana" => "Login"
     ];
+    $this->includes();
     //Mostramos la página de inicio 
     include_once 'vistas/inicio.php';
   }
@@ -42,6 +43,7 @@ class controlador {
     $parametros = [
         "tituloventana" => "Registro"
     ];
+    $this->includes();
     //Mostramos la página de inicio 
     include_once 'vistas/registrarse.php';
   }
@@ -50,10 +52,31 @@ class controlador {
         "tituloventana" => "Bienvenido"
     ];
   
-  
-    include_once 'vistas/vistaaceptado.php';
+  $this->includes();
+    include_once 'vistas/vistaprincipal.php';
   }
   
+  public function includes() {
+     
+    include_once 'vistas/includes/head.php';
+  }
+  
+   public function vistaaceptadoprofile() {
+      $parametros = [
+        "tituloventana" => "Bienvenido"
+    ];
+  
+    $this->includes();
+    include_once 'vistas/paraprincipal/profile.php';
+  }
+  public function vistaaceptadolistar() {
+      $parametros = [
+        "tituloventana" => "Bienvenido"
+    ];
+  
+    $this->includes();
+    include_once 'vistas/paraprincipal/listarusuarios.php';
+  }
  
   
   
@@ -87,43 +110,16 @@ class controlador {
   }
   
   
-  public function registro()
+
+  
+  public function listarusuarios()
   {
-     $guardar_usuario= $this->modelo->validar();
-     
-     if($guardar_usuario['saber']==true)
-     {
-         $nif=$_POST['nif'] ;
-        $nombre= $_POST['nombre'] ;
-        $apellido1= $_POST['apellido1'] ;
-        $apellido2= $_POST['apellido2'] ;
-        $email= $_POST['email'] ;
-        $password= sha1($_POST['password'] );
-        $telefonomovil=$_POST['telefonomovil'] ;
-        $telefonofijo=$_POST['telefonofijo'] ;
-        $departamento=$_POST['departamento'] ;
-        $paginaweb=$_POST['paginaweb'] ;
-        $direccionblog=$_POST['direccionblog'] ;
-        $cuentatwitter=$_POST['cuentatwitter'] ;
-        $usuariologin= $_POST['usuariologin'] ;
-        $foto=$guardar_usuario['nombrecompleto'];
-        
-         $resultado= $this->modelo->insertarregistro($nif, $nombre, $apellido1, $apellido2, $password, $telefonomovil, $telefonofijo, $email, $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuariologin,$foto);
-            
-        if($resultado == true)
-        {
-           
-            $this->index();
-            var_dump('Felicidades');
-            
-        }
-        else
-        {
-            $this->registrarse();
-            var_dump('Algo ha fallado');
-        }
+        $resultado= $this->modelo->listarusuarios();
+         
+        $_SESSION["listado"]=$resultado;
+        $this->vistaaceptadolistar();
+               
         
      }
      
   }
-}

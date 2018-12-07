@@ -413,30 +413,30 @@ public function validarlogininsertado()
       return $resultado;
   }
 
-  public function activado($nombre) {
-    $return = [
-        "correcto" => FALSE,
-        "datos" => NULL,
-        "error" => NULL
-    ];
-
-   
+  public function listarusuarios() {
+    
       try {
-        $sql = "SELECT * FROM usuarios WHERE nombre=:nombre ";
-        $query = $this->conexion->prepare($sql);
-        $query->execute(['nombre' => $nombre]);
+        $sql = "SELECT * FROM usuarios  ";
+        $query = $this->conexion->query($sql);
+        
         //Supervisamos que la consulta se realizó correctamente... 
-        if ($query) {
-          $return["correcto"] = TRUE;
-          $return["datos"] = $query->fetch(PDO::FETCH_ASSOC);
-        }// o no :(
+        $fila = $query->fetchAll(PDO::FETCH_ASSOC);
+             if($query)
+                {
+                 
+                    $resultado=$fila;
+                }
+            else
+                {
+                    $resultado='';
+                }
       } catch (PDOException $ex) {
-        $return["error"] = $ex->getMessage();
+        $resultado = $ex->getMessage();
         //die();
       }
     
 
-    return $return;
+    return $resultado;
   }
 
 }

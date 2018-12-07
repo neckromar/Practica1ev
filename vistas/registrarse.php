@@ -2,8 +2,7 @@
 <html>
     <title><?= $parametros["tituloventana"] ?> </title>
   <head>
-       
-    <?php require_once 'includes/head.php'; ?>
+     
       <?php require_once 'includes/helpers.php'; ?>
       
   </head>

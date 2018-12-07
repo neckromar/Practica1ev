@@ -2,48 +2,61 @@
 <html>
     <title><?= $parametros["tituloventana"] ?></title>
   <head>
-          <?php require_once 'includes/head.php'; ?>
+        
     
   </head>
   
   <body >
       
-        <div id="wrapper" class="animate">
+    <div id="wrapper" class="animate">
     <nav class="navbar header-top fixed-top navbar-expand-lg navbar-dark bg-dark">
-      <span class="navbar-toggler-icon leftmenutrigger"></span>
+      
       <a class="navbar-brand" href="#">LOGO</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
-        aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+      
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav animate side-nav">
+            
           <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="elcentro" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-user"></i> Submenu <i class="fas fa-user shortmenu animate"></i>
-        </a>
+              
+                <a class="nav-link " href="#" id="navbarDropdown" role="button"  aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user"></i> Listas Usuarios </a>
         
-      </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" title="Cart"><i class="fas fa-cart-plus"></i> Cart <i class="fas fa-cart-plus shortmenu animate"></i></a>
           </li>
+          
           <li class="nav-item">
-            <a class="nav-link" href="#" title="Comment"><i class="fas fa-comment"></i> Comment <i class="fas fa-comment shortmenu animate"></i></a>
+                <a class="nav-link" href="#" title="Cart"><i class="fas fa-cart-plus"></i> Cart</a>
           </li>
+          
+          
+          <li class="nav-item">
+                <a class="nav-link" href="#" title="Comment"><i class="fas fa-comment"></i> Comment </a>
+          </li>
+          
         </ul>
         <ul class="navbar-nav ml-md-auto d-md-flex">
           <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-user"></i> Profile</a>
+              
+              <a class="nav-link" href="index.php?accion=vistaaceptadoprofile"><i class="fas fa-user"></i> 
+            <?php  if(isset($_SESSION["logged"])){
+            echo '  '.$_SESSION["logged"]["usuariologin"];}?>
+            </a>
+              
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#"><i class="fas fa-key"></i> Logout</a>
           </li>
         </ul>
       </div>
+      </div>
+      
+      
     </nav>
-    <div class="container-fluid" id="elcentro">
-          
-          <div  style="width:20%">
+   
+  
+  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+  
+  
+      <div class="container" style="width:20%;margin-top:5%">
     
                 <div class="card-body">
                     <?php  if(isset($_SESSION["logged"])){
@@ -56,12 +69,7 @@
                     } ?>
                 </div>
     
-            </div>
-      
-    </div>
-  </div>
-  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-      
-      
+       </div>
+ 
        </body>
 </html>
