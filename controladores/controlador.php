@@ -89,7 +89,7 @@ class controlador {
             $password=sha1($_POST['passwordlogin']);
             $resultado= $this->modelo->validarlogin($usuario,$password);
           
-             if($resultado['usuario'] == 'Administrador' || $resultado['usuario']=='Profesor')
+             if($resultado['Usuario'] == 'Administrador' || $resultado['Usuario']=='Profesor')
                 {
                      $_SESSION["logged"]=$resultado;
                      $this->vistaaceptado();
@@ -122,4 +122,44 @@ class controlador {
         
      }
      
+  
+
+  public function registro()
+  {
+     $guardar_usuario= $this->modelo->validar();
+     
+     if($guardar_usuario['saber']==true)
+     {
+         $nif=$_POST['nif'] ;
+        $nombre= $_POST['nombre'] ;
+        $apellido1= $_POST['apellido1'] ;
+        $apellido2= $_POST['apellido2'] ;
+        $email= $_POST['email'] ;
+        $password= sha1($_POST['password'] );
+        $telefonomovil=$_POST['telefonomovil'] ;
+        $telefonofijo=$_POST['telefonofijo'] ;
+        $departamento=$_POST['departamento'] ;
+        $paginaweb=$_POST['paginaweb'] ;
+        $direccionblog=$_POST['direccionblog'] ;
+        $cuentatwitter=$_POST['cuentatwitter'] ;
+        $usuariologin= $_POST['usuariologin'] ;
+        $foto=$guardar_usuario['nombrecompleto'];
+        
+         $resultado= $this->modelo->insertarregistro($nif, $nombre, $apellido1, $apellido2, $password, $telefonomovil, $telefonofijo, $email, $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuariologin,$foto);
+            
+        if($resultado == true)
+        {
+           
+            $this->index();
+            var_dump('Felicidades');
+        }
+        else
+        {
+            $this->registrarse();
+            var_dump('Algo ha fallado');
+        }
+        
+     }
+     
   }
+}
