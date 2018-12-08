@@ -19,15 +19,6 @@
                                 echo"<td>".$_SESSION["listado"][$a]["Nombre"]."</td>";
                                 echo"<td>".$_SESSION["listado"][$a]["Apellido1"]."</td>";
                                 echo"<td>".$_SESSION["listado"][$a]["Apellido2"]."</td>";
-                                if($_SESSION["logged"]['Usuario']=="Profesor" ||$_SESSION["logged"]['Usuario']=="profesor" )
-                                {
-                                     echo"<td> </td>";
-                                }
-                                else
-                                {
-                                    echo"<td>".$_SESSION["listado"][$a]["Password"]."</td>";
-                                    
-                                }
                                 echo"<td>".$_SESSION["listado"][$a]["Telefonomovil"]."</td>";
                                 echo"<td>".$_SESSION["listado"][$a]["Telefonofijo"]."</td>";
                                 echo"<td>".$_SESSION["listado"][$a]["Email"]."</td>";
@@ -39,7 +30,8 @@
                                 echo"<td>".$_SESSION["listado"][$a]["FechaRegistro"]."</td>";
                                 echo"<td>".$_SESSION["listado"][$a]["UsuarioLogin"]."</td>";
                                 echo"<td>".$_SESSION["listado"][$a]["Foto"]."</td>";
-                                
+                                echo"<td>".$_SESSION["listado"][$a]["Aceptado"]."</td>";
+                                echo '<td>' . '<a href="index.php?accion=modificar?id=' . $_SESSION["listado"][$a]['ID']. '">Editar </a>'   . '</td>' ; 
                                
                                 echo"</tr>";
                              }

@@ -353,14 +353,14 @@ public function validarlogininsertado()
          
     //Realizamos la consulta...
     try {  //Definimos la instrucción SQL  
-      $sql = "SELECT `Usuario`,`Nombre`, `Apellido1`, `Apellido2`,`Email`, `Departamento`,`Foto`,`UsuarioLogin` FROM usuarios WHERE `UsuarioLogin`=:usuario AND `Password`=:password ;";
+      $sql = "SELECT `Usuario`,`Nombre`, `Apellido1`, `Apellido2`,`Email`, `Departamento`,`Foto`,`UsuarioLogin`,`Aceptado` FROM usuarios WHERE `UsuarioLogin`=:usuario AND `Password`=:password ;";
       $query = $this->conexion->prepare($sql);
       $query->execute(['usuario' => $usuario,'password'=>$password]);
         
          
           $fila = $query->fetch(PDO::FETCH_ASSOC);
             
-             if($fila['Usuario']=='Administrador' || $fila['Usuario']=='Profesor' )
+             if($fila['Usuario']=='Administrador' || $fila['Usuario']=='Profesor'  )
                 {
                  
                     $resultado=$fila;
@@ -391,7 +391,7 @@ public function validarlogininsertado()
       
       try {
           
-        $sql = "INSERT INTO usuarios (`ID`, `Nif`, `Nombre`, `Apellido1`, `Apellido2`, `Password`, `Telefonomovil`, `Telefonofijo`, `Email`, `Departamento`, `Paginaweb`, `Direccionblog`, `Cuentatwitter`, `Usuario`, `FechaRegistro`, `UsuarioLogin` , `Foto`) VALUES (null,:nif,:nombre,:apellido1,:apellido2,:password_segura,:telefonomovil,:telefonofijo,:email,:departamento,:paginaweb,:direccionblog,:cuentatwitter,'profesor',CURRENT_DATE(),:usuariologin ,:foto);";
+        $sql = "INSERT INTO usuarios (`ID`, `Nif`, `Nombre`, `Apellido1`, `Apellido2`, `Password`, `Telefonomovil`, `Telefonofijo`, `Email`, `Departamento`, `Paginaweb`, `Direccionblog`, `Cuentatwitter`, `Usuario`, `FechaRegistro`, `UsuarioLogin` , `Foto`,`Aceptado`) VALUES (null,:nif,:nombre,:apellido1,:apellido2,:password_segura,:telefonomovil,:telefonofijo,:email,:departamento,:paginaweb,:direccionblog,:cuentatwitter,'profesor',CURRENT_DATE(),:usuariologin ,:foto,0);";
         $query = $this->conexion->prepare($sql);
         $query->execute(['nif' => $nif, 'nombre'=>$nombre, 'apellido1'=>$apellido1 , 'apellido2'=> $apellido2 ,'password_segura'=>$password_segura ,'telefonomovil' => $telefonomovil, 'telefonofijo'=>$telefonofijo,'email'=>$email,'departamento'=>$departamento,'paginaweb'=>$paginaweb ,'direccionblog'=>$direccionblog,'cuentatwitter'=>$cuentatwitter,'usuariologin'=>$usuariologin ,'foto'=>$foto]);
 
@@ -416,7 +416,7 @@ public function validarlogininsertado()
   public function listarusuarios() {
     
       try {
-        $sql = "SELECT * FROM usuarios  ";
+        $sql = "SELECT `ID`, `Nif`, `Nombre`, `Apellido1`, `Apellido2`, `Telefonomovil`, `Telefonofijo`, `Email`, `Departamento`, `Paginaweb`, `Direccionblog`, `Cuentatwitter`, `Usuario`, `FechaRegistro`, `UsuarioLogin` , `Foto`,`Aceptado` FROM usuarios  ";
         $query = $this->conexion->query($sql);
         
         //Supervisamos que la consulta se realizó correctamente... 
@@ -439,4 +439,60 @@ public function validarlogininsertado()
     return $resultado;
   }
 
+
+
+public function modificarlistarusuario($id,$nif, $nombre, $apellido1, $apellido2,  $telefonomovil, $telefonofijo,  $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuario,$foto,$activado){
+      try {
+        $sql = "UPDATE usuarios SET :nif,:nombre,:apellido1,:apellido2,:telefonomovil,:telefonofijo,:departamento,:paginaweb,:direccionblog,:cuentatwitter,:usuario,:foto,:activado WHERE id=:id";
+        $query = $this->conexion->query($sql);
+        $query->execute(['nif' => $nif, 'nombre'=>$nombre, 'apellido1'=>$apellido1 , 'apellido2'=> $apellido2 ,'telefonomovil' => $telefonomovil, 'telefonofijo'=>$telefonofijo,'departamento'=>$departamento,'paginaweb'=>$paginaweb ,'direccionblog'=>$direccionblog,'cuentatwitter'=>$cuentatwitter,'usuario'=>$usuario ,'foto'=>$foto,'activado'=>$activado]);
+
+        //Supervisamos que la consulta se realizó correctamente... 
+        
+             if($query)
+                {
+                 
+                    $resultado=true;
+                }
+            else
+                {
+                    $resultado=false;
+                }
+      } catch (PDOException $ex) {
+        $resultado = $ex->getMessage();
+        //die();
+      }
+    
+
+    return $resultado;
+  }
+
+public function modificarusuario($id){
+      try {
+       $sql = "SELECT `Nif`, `Nombre`, `Apellido1`, `Apellido2`, `Telefonomovil`, `Telefonofijo`,  `Departamento`, `Paginaweb`, `Direccionblog`, `Cuentatwitter`, `Usuario`,  `Foto`,`Aceptado` FROM usuarios WHERE id=:id ";
+        $query = $this->conexion->query($sql);
+        $query->execute(['id'=>$id]);
+        
+         $fila = $query->fetch(PDO::FETCH_ASSOC);
+        //Supervisamos que la consulta se realizó correctamente... 
+        
+             if($query)
+                {
+                 
+                    $resultado=$fila;
+                }
+            else
+                {
+                    $resultado='';
+                }
+      } catch (PDOException $ex) {
+        $resultado = $ex->getMessage();
+        //die();
+      }
+    
+
+    return $resultado;
+  }
+  
+  
 }
