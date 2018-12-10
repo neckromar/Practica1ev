@@ -548,5 +548,58 @@ public function modificarusuario($id){
     return $resultado;
   }
   
-  
+  //hacer modificar el perfil
+  public function listarperfil($id){
+    
+       
+       //compruebo si he recibido algo por el post del login
+      try {
+       $sql = "SELECT `Nif`, `Nombre`, `Apellido1`, `Apellido2`, `Telefonomovil`, `Telefonofijo`,  `Departamento`, `Paginaweb`, `Direccionblog`, `Cuentatwitter`, `UsuarioLogin`,  `Foto` FROM usuarios WHERE `ID`= :id ";
+        $query = $this->conexion->prepare($sql);
+        $query->execute(['id'=>$id]);
+        
+         $fila = $query->fetch(PDO::FETCH_ASSOC);
+        //Supervisamos que la consulta se realizó correctamente... 
+        
+             if($query)
+                {
+                    $resultado=$fila;
+                }
+            else
+                {
+                    $resultado='';
+                }
+      } catch (PDOException $ex) {
+        $resultado = $ex->getMessage();
+        //die();
+      }
+    
+
+    return $resultado;
+  }
+  public function modificarperfilpropio($id,$nif, $nombre, $apellido1, $apellido2,  $telefonomovil, $telefonofijo,  $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuariologin,$foto){
+      try {
+        $sql = "UPDATE usuarios SET `Nif`=:nif,`Nombre`=:nombre,`Apellido1`=:apellido1,`Apellido2`=:apellido2,`Telefonomovil`=:telefonomovil,`Telefonofijo`=:telefonofijo,`Departamento`=:departamento,`Paginaweb`=:paginaweb,`Direccionblog`=:direccionblog,`Cuentatwitter`=:cuentatwitter,`UsuarioLogin`=:usuariologin,`Foto`=:foto WHERE `ID`=:id";
+        $query = $this->conexion->prepare($sql);
+        $query->execute(['id'=>$id,'nif' => $nif, 'nombre'=>$nombre, 'apellido1'=>$apellido1 , 'apellido2'=> $apellido2 ,'telefonomovil' => $telefonomovil, 'telefonofijo'=>$telefonofijo,'departamento'=>$departamento,'paginaweb'=>$paginaweb ,'direccionblog'=>$direccionblog,'cuentatwitter'=>$cuentatwitter,'usuariologin'=>$usuariologin ,'foto'=>$foto]);
+
+        //Supervisamos que la consulta se realizó correctamente... 
+        
+             if($query)
+                {
+                  
+                    $resultado=true;
+                }
+            else
+                {
+                    $resultado=false;
+                }
+      } catch (PDOException $ex) {
+        $resultado = $ex->getMessage();
+        //die();
+      }
+    
+
+    return $resultado;
+  }
 }
