@@ -179,7 +179,7 @@ class controlador {
   
   public function modificar()
   {
-      var_dump('he fallado modificar');
+     
       $id='';
         $nif='' ;
         $nombre= '' ;
@@ -194,11 +194,9 @@ class controlador {
         $usuario= '' ;
         $foto='';
         $activado='';
-       
       if(isset($_POST['Actualizar']))
       {
           var_dump('he fallado if');
-         $id=$_POST['id'];
         $nif=$_POST['nif'] ;
         $nombre= $_POST['nombre'] ;
         $apellido1= $_POST['apellido1'] ;
@@ -213,7 +211,7 @@ class controlador {
         $foto=$_POST['foto'];
         $activado=$_POST['activado'];
         
-        $resultado= $this->modelo->modificarlistarusuario($id,$nif, $nombre, $apellido1, $apellido2,  $telefonomovil, $telefonofijo,  $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuario,$foto,$activado);
+        $resultado= $this->modelo->modificarlistarusuario($nif, $nombre, $apellido1, $apellido2,  $telefonomovil, $telefonofijo,  $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuario,$foto,$activado);
         
         if($resultado==true)
         {
@@ -243,11 +241,11 @@ class controlador {
       }
       else
       {
-          if(isset($_GET['id'])&&(is_numeric($_GET['id'])))
+          if(isset($_GET['ID'])&&(is_numeric($_GET['ID'])))
           {
               
               
-              $id=$_GET['id'];
+              $id=$_GET['ID'];
               $resultado= $this->modelo->modificarusuario($id);
               
               $id=$resultado['ID'];
@@ -286,4 +284,5 @@ class controlador {
           }
       }
   }
+  
 }

@@ -31,7 +31,7 @@
                                 echo"<td>".$_SESSION["listado"][$a]["UsuarioLogin"]."</td>";
                                 echo"<td>".$_SESSION["listado"][$a]["Foto"]."</td>";
                                 echo"<td>".$_SESSION["listado"][$a]["Aceptado"]."</td>";
-                                echo '<td>' . '<a href="index.php?accion=modificar?id=' . $_SESSION["listado"][$a]['ID']. '">Editar </a>'   . '</td>' ; 
+                                echo '<td>' . '<a href="index.php?accion=modificar?ID='.$_SESSION["listado"][$a]["ID"].' ">Editar </a>'   . '</td>' ; 
                                
                                 echo"</tr>";
                              }

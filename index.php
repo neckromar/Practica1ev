@@ -28,10 +28,12 @@
          $controlador->$accion(); //Ejecutamos la operación indicada en $accion
     else :
       $controlador->index();   //Redirigimos a la página de inicio 
+   
     endif;
 
     else :
          $controlador->index();
+    var_dump("he fallado xk no existe");
     endif;
 
 ?>

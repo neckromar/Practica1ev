@@ -5,6 +5,8 @@
      
       <?php require_once 'includes/helpers.php'; ?>
       
+      <script src='https://www.google.com/recaptcha/api.js'></script>
+      
   </head>
   <body >
   <div class="container">
@@ -93,6 +95,11 @@
                             <img src="images//twitter.png" /><label for="CUENTATWITTER">Cuenta Twitter</label>
                             <input name="cuentatwitter"  placeholder="CUENTATWITTER" type="text" class="form-control" />
                         </div>
+                         
+                         
+                         <div class="g-recaptcha" data-sitekey="6Le6vH8UAAAAACuOyDn7ffwt8TEcT4a_oFnaadtc"></div>
+                          <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'captcha'):"" ?></span>
+                         
                         <div class="form-group">
                              <input type="submit" name="Registrarse" value="Registrarse" class="btn btn-info btn-block"/>
                              

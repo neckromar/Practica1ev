@@ -86,8 +86,35 @@ class modelo {
         $paginaweb=$_POST['paginaweb'] ;
         $direccionblog=$_POST['direccionblog'] ;
         $cuentatwitter=$_POST['cuentatwitter'] ;
+        $captcha=$_POST['g-recaptcha-response'];
         
+        $secret='6Le6vH8UAAAAAKyXBPdrKDzzFgueAqHXS31HOWgi';
        
+        
+        //verifica el captcha
+        
+        if(!$captcha)
+        {
+            $errores['captcha']= '<div class="alert alert-danger">Verifica el captcha </div>';
+        }
+        
+        $response= file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$captcha");
+        
+        
+        $arr= json_decode($response,TRUE);
+        
+        if($arr['success'])
+        {
+            
+        }
+        else
+        {
+            $errores['captcha']= '<div class="alert alert-danger">Error al comprobar el captcha </div>';
+        }
+        
+        
+        
+        
         //validar nif
        
           if(!empty($nif) &&  preg_match('/^[0-9]{8}[A-Z]{1}$/', $nif))
@@ -443,15 +470,15 @@ public function validarlogininsertado()
 
 public function modificarlistarusuario($id,$nif, $nombre, $apellido1, $apellido2,  $telefonomovil, $telefonofijo,  $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuario,$foto,$activado){
       try {
-        $sql = "UPDATE usuarios SET :nif,:nombre,:apellido1,:apellido2,:telefonomovil,:telefonofijo,:departamento,:paginaweb,:direccionblog,:cuentatwitter,:usuario,:foto,:activado WHERE id=:id";
+        $sql = "UPDATE usuarios SET :nif,:nombre,:apellido1,:apellido2,:telefonomovil,:telefonofijo,:departamento,:paginaweb,:direccionblog,:cuentatwitter,:usuario,:foto,:activado WHERE `ID`=:id";
         $query = $this->conexion->query($sql);
-        $query->execute(['nif' => $nif, 'nombre'=>$nombre, 'apellido1'=>$apellido1 , 'apellido2'=> $apellido2 ,'telefonomovil' => $telefonomovil, 'telefonofijo'=>$telefonofijo,'departamento'=>$departamento,'paginaweb'=>$paginaweb ,'direccionblog'=>$direccionblog,'cuentatwitter'=>$cuentatwitter,'usuario'=>$usuario ,'foto'=>$foto,'activado'=>$activado]);
+        $query->execute(['id'=>$id,'nif' => $nif, 'nombre'=>$nombre, 'apellido1'=>$apellido1 , 'apellido2'=> $apellido2 ,'telefonomovil' => $telefonomovil, 'telefonofijo'=>$telefonofijo,'departamento'=>$departamento,'paginaweb'=>$paginaweb ,'direccionblog'=>$direccionblog,'cuentatwitter'=>$cuentatwitter,'usuario'=>$usuario ,'foto'=>$foto,'activado'=>$activado]);
 
         //Supervisamos que la consulta se realizó correctamente... 
         
              if($query)
                 {
-                 
+                  
                     $resultado=true;
                 }
             else
@@ -469,7 +496,7 @@ public function modificarlistarusuario($id,$nif, $nombre, $apellido1, $apellido2
 
 public function modificarusuario($id){
       try {
-       $sql = "SELECT `Nif`, `Nombre`, `Apellido1`, `Apellido2`, `Telefonomovil`, `Telefonofijo`,  `Departamento`, `Paginaweb`, `Direccionblog`, `Cuentatwitter`, `Usuario`,  `Foto`,`Aceptado` FROM usuarios WHERE id=:id ";
+       $sql = "SELECT `Nif`, `Nombre`, `Apellido1`, `Apellido2`, `Telefonomovil`, `Telefonofijo`,  `Departamento`, `Paginaweb`, `Direccionblog`, `Cuentatwitter`, `Usuario`,  `Foto`,`Aceptado` FROM usuarios WHERE `ID`=:id ";
         $query = $this->conexion->query($sql);
         $query->execute(['id'=>$id]);
         
@@ -478,7 +505,6 @@ public function modificarusuario($id){
         
              if($query)
                 {
-                 
                     $resultado=$fila;
                 }
             else
