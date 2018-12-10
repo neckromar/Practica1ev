@@ -3,7 +3,6 @@
     <title><?= $parametros["tituloventana"] ?></title>
   <head>
       
-    <?php require_once 'includes/helpers.php'; ?>
   </head>
   
   <body  >

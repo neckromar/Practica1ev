@@ -62,7 +62,7 @@ class modelo {
   {
       
  
- if(isset($_POST['Registrarse']))
+ if(isset($_POST))
     {
      
          $directorioSubida = "fotos/";
@@ -443,7 +443,32 @@ public function validarlogininsertado()
   public function listarusuarios() {
     
       try {
-        $sql = "SELECT `ID`, `Nif`, `Nombre`, `Apellido1`, `Apellido2`, `Telefonomovil`, `Telefonofijo`, `Email`, `Departamento`, `Paginaweb`, `Direccionblog`, `Cuentatwitter`, `Usuario`, `FechaRegistro`, `UsuarioLogin` , `Foto`,`Aceptado` FROM usuarios  ";
+        $sql = "SELECT `ID`, `Nif`, `Nombre`, `Apellido1`, `Apellido2`, `Telefonomovil`, `Telefonofijo`, `Email`, `Departamento`,  `Usuario`, `UsuarioLogin`  FROM usuarios WHERE `Aceptado`=1 ";
+        $query = $this->conexion->query($sql);
+        
+        //Supervisamos que la consulta se realizó correctamente... 
+        $fila = $query->fetchAll(PDO::FETCH_ASSOC);
+             if($query)
+                {
+                 
+                    $resultado=$fila;
+                }
+            else
+                {
+                    $resultado='';
+                }
+      } catch (PDOException $ex) {
+        $resultado = $ex->getMessage();
+        //die();
+      }
+    
+
+    return $resultado;
+  }
+  public function solicitudesusuarios() {
+    
+      try {
+        $sql = "SELECT `ID`, `Nif`, `Nombre`, `Apellido1`, `Apellido2`, `Telefonomovil`, `Telefonofijo`, `Email`, `Departamento`,  `Usuario`, `UsuarioLogin`, `Aceptado`  FROM usuarios WHERE `Aceptado`=0 ";
         $query = $this->conexion->query($sql);
         
         //Supervisamos que la consulta se realizó correctamente... 
@@ -470,8 +495,8 @@ public function validarlogininsertado()
 
 public function modificarlistarusuario($id,$nif, $nombre, $apellido1, $apellido2,  $telefonomovil, $telefonofijo,  $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuario,$foto,$activado){
       try {
-        $sql = "UPDATE usuarios SET :nif,:nombre,:apellido1,:apellido2,:telefonomovil,:telefonofijo,:departamento,:paginaweb,:direccionblog,:cuentatwitter,:usuario,:foto,:activado WHERE `ID`=:id";
-        $query = $this->conexion->query($sql);
+        $sql = "UPDATE usuarios SET `Nif`=:nif,`Nombre`=:nombre,`Apellido1`=:apellido1,`Apellido2`=:apellido2,`Telefonomovil`=:telefonomovil,`Telefonofijo`=:telefonofijo,`Departamento`=:departamento,`Paginaweb`=:paginaweb,`Direccionblog`=:direccionblog,`Cuentatwitter`=:cuentatwitter,`Usuario`=:usuario,`Foto`=:foto,`Aceptado`=:activado WHERE `ID`=:id";
+        $query = $this->conexion->prepare($sql);
         $query->execute(['id'=>$id,'nif' => $nif, 'nombre'=>$nombre, 'apellido1'=>$apellido1 , 'apellido2'=> $apellido2 ,'telefonomovil' => $telefonomovil, 'telefonofijo'=>$telefonofijo,'departamento'=>$departamento,'paginaweb'=>$paginaweb ,'direccionblog'=>$direccionblog,'cuentatwitter'=>$cuentatwitter,'usuario'=>$usuario ,'foto'=>$foto,'activado'=>$activado]);
 
         //Supervisamos que la consulta se realizó correctamente... 
@@ -495,9 +520,12 @@ public function modificarlistarusuario($id,$nif, $nombre, $apellido1, $apellido2
   }
 
 public function modificarusuario($id){
+    
+       
+       //compruebo si he recibido algo por el post del login
       try {
-       $sql = "SELECT `Nif`, `Nombre`, `Apellido1`, `Apellido2`, `Telefonomovil`, `Telefonofijo`,  `Departamento`, `Paginaweb`, `Direccionblog`, `Cuentatwitter`, `Usuario`,  `Foto`,`Aceptado` FROM usuarios WHERE `ID`=:id ";
-        $query = $this->conexion->query($sql);
+       $sql = "SELECT `ID`,`Nif`, `Nombre`, `Apellido1`, `Apellido2`, `Telefonomovil`, `Telefonofijo`,  `Departamento`, `Paginaweb`, `Direccionblog`, `Cuentatwitter`, `Usuario`,  `Foto`,`Aceptado` FROM usuarios WHERE `ID`= :id ";
+        $query = $this->conexion->prepare($sql);
         $query->execute(['id'=>$id]);
         
          $fila = $query->fetch(PDO::FETCH_ASSOC);

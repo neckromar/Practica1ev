@@ -2,9 +2,7 @@
 <html>
     <title><?= $parametros["tituloventana"] ?> </title>
   <head>
-     
-      <?php require_once 'includes/helpers.php'; ?>
-      
+   
       <script src='https://www.google.com/recaptcha/api.js'></script>
       
   </head>

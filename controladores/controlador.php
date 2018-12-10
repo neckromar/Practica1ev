@@ -59,13 +59,15 @@ class controlador {
   public function includes() {
      
     include_once 'vistas/includes/head.php';
+    require_once 'vistas/includes/helpers.php';
   }
+  
   
    public function vistaaceptadoprofile() {
       $parametros = [
         "tituloventana" => "Bienvenido"
     ];
-  
+    $this->vistaaceptado();
     $this->includes();
     include_once 'vistas/paraprincipal/profile.php';
   }
@@ -73,15 +75,23 @@ class controlador {
       $parametros = [
         "tituloventana" => "Bienvenido"
     ];
-  
+    $this->vistaaceptado();
     $this->includes();
     include_once 'vistas/paraprincipal/listarusuarios.php';
   }
  public function vistamodificar() {
     
-  
+     
+    $this->vistaaceptado();
     $this->includes();
     include_once 'vistas/paraprincipal/modificaruser.php';
+  }
+  public function solicitudes() {
+    
+     
+    $this->vistaaceptado();
+    $this->includes();
+    include_once 'vistas/paraprincipal/solicitudesusuarios.php';
   }
   
   
@@ -134,6 +144,15 @@ class controlador {
         $this->vistaaceptadolistar();
                
         
+   }
+   public function solicitudesusuarios()
+  {
+        $resultado= $this->modelo->solicitudesusuarios();
+         
+        $_SESSION["solicitudes"]=$resultado;
+        $this->solicitudes();
+               
+        
      }
      
   
@@ -180,23 +199,10 @@ class controlador {
   public function modificar()
   {
      
-      $id='';
-        $nif='' ;
-        $nombre= '' ;
-        $apellido1= '' ;
-        $apellido2= '' ;
-        $telefonomovil='' ;
-        $telefonofijo='' ;
-        $departamento='' ;
-        $paginaweb='' ;
-        $direccionblog='' ;
-        $cuentatwitter='' ;
-        $usuario= '' ;
-        $foto='';
-        $activado='';
+      
       if(isset($_POST['Actualizar']))
       {
-          var_dump('he fallado if');
+        $id=$_POST['ID'] ;
         $nif=$_POST['nif'] ;
         $nombre= $_POST['nombre'] ;
         $apellido1= $_POST['apellido1'] ;
@@ -211,25 +217,11 @@ class controlador {
         $foto=$_POST['foto'];
         $activado=$_POST['activado'];
         
-        $resultado= $this->modelo->modificarlistarusuario($nif, $nombre, $apellido1, $apellido2,  $telefonomovil, $telefonofijo,  $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuario,$foto,$activado);
+        $resultado= $this->modelo->modificarlistarusuario($id,$nif, $nombre, $apellido1, $apellido2,  $telefonomovil, $telefonofijo,  $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuario,$foto,$activado);
         
         if($resultado==true)
         {
-             $arraymodificar=array($id,
-                                     $nif,
-                                     $nombre,
-                                     $apellido1,
-                                     $apellido2,
-                                     $telefonomovil,
-                                     $telefonofijo,
-                                     $departamento,
-                                     $paginaweb,
-                                     $direccionblog,
-                                     $cuentatwitter,
-                                     $usuario,
-                                     $foto,
-                                     $activado);
-             $_SESSION["modificar"]=$arraymodificar;
+            
              $this->listarusuarios();
              var_dump('Felicidades se ha actualizado!');
         }
@@ -239,50 +231,23 @@ class controlador {
         }
         
       }
-      else
+     
+      }
+      
+      public function getmodificar()
       {
-          if(isset($_GET['ID'])&&(is_numeric($_GET['ID'])))
+          
+           if(isset($_GET["ID"]) && (is_numeric($_GET['ID'])))
           {
               
               
               $id=$_GET['ID'];
               $resultado= $this->modelo->modificarusuario($id);
               
-              $id=$resultado['ID'];
-              $nif=$resultado['Nif'];
-              $nombre= $resultado['Nombre'];
-              $apellido1= $resultado['Apellido1'] ;
-              $apellido2= $resultado['Apellido2'] ;
-              $telefonomovil=$resultado['Telefonomovil'] ;
-              $telefonofijo=$resultado['Telefonofijo'] ;
-              $departamento=$resultado['Departamento'] ;
-              $paginaweb=$resultado['Paginaweb'] ;
-              $direccionblog=$resultado['Direccionblog'] ;
-              $cuentatwitter=$resultado['Cuentatwitter'] ;
-              $usuario= $resultado['Usuario'] ;
-              $foto=$resultado['Foto'];
-              $activado=$resultado['Aceptado'];
-              $arraymodificar=array($id,
-                                     $nif,
-                                     $nombre,
-                                     $apellido1,
-                                     $apellido2,
-                                     $telefonomovil,
-                                     $telefonofijo,
-                                     $departamento,
-                                     $paginaweb,
-                                     $direccionblog,
-                                     $cuentatwitter,
-                                     $usuario,
-                                     $foto,
-                                     $activado);
-              
-               $_SESSION["modificar"]=$arraymodificar;
-               var_dump('he fallado else');
+               $_SESSION['modificar']=$resultado;
                $this->vistamodificar();
                
           }
       }
   }
   
-}

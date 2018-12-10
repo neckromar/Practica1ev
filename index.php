@@ -33,7 +33,6 @@
 
     else :
          $controlador->index();
-    var_dump("he fallado xk no existe");
     endif;
 
 ?>

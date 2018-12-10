@@ -13,7 +13,6 @@
                         for ($a=0;$a<count($_SESSION["listado"]);$a++) 
                             {
                                 echo"<tr class='table-info'>";
-                                
                                 echo"<td>".$_SESSION["listado"][$a]['ID']."</td>";
                                 echo"<td>".$_SESSION["listado"][$a]["Nif"]."</td>";
                                 echo"<td>".$_SESSION["listado"][$a]["Nombre"]."</td>";
@@ -23,15 +22,13 @@
                                 echo"<td>".$_SESSION["listado"][$a]["Telefonofijo"]."</td>";
                                 echo"<td>".$_SESSION["listado"][$a]["Email"]."</td>";
                                 echo"<td>".$_SESSION["listado"][$a]["Departamento"]."</td>";
-                                echo"<td>".$_SESSION["listado"][$a]["Paginaweb"]."</td>";
-                                echo"<td>".$_SESSION["listado"][$a]["Direccionblog"]."</td>";
-                                echo"<td>".$_SESSION["listado"][$a]["Cuentatwitter"]."</td>";
                                 echo"<td>".$_SESSION["listado"][$a]["Usuario"]."</td>";
-                                echo"<td>".$_SESSION["listado"][$a]["FechaRegistro"]."</td>";
                                 echo"<td>".$_SESSION["listado"][$a]["UsuarioLogin"]."</td>";
-                                echo"<td>".$_SESSION["listado"][$a]["Foto"]."</td>";
-                                echo"<td>".$_SESSION["listado"][$a]["Aceptado"]."</td>";
-                                echo '<td>' . '<a href="index.php?accion=modificar?ID='.$_SESSION["listado"][$a]["ID"].' ">Editar </a>'   . '</td>' ; 
+                                if($_SESSION["logged"]['Usuario']=='Administrador')
+                                    {
+                                     echo '<td>' . '<a href="index.php?accion=getmodificar&ID='.$_SESSION["listado"][$a]['ID'].'">Editar </a>'   . '</td>' ; 
+                               
+                                }
                                
                                 echo"</tr>";
                              }

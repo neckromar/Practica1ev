@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
     <title><?= $parametros["tituloventana"] ?></title>
+    
   <head>
-        
+       
     
   </head>
   
@@ -15,13 +16,23 @@
       
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav animate side-nav">
+             <?php  if(isset($_SESSION["logged"]) && $_SESSION["logged"]['Usuario']=='Administrador'){
             
-          <li class="nav-item dropdown">
-              
-                <a class="nav-link " href="index.php?accion=listarusuarios" id="navbarDropdown"  aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-user"></i> Listas Usuarios </a>
-        
-          </li>
+                     echo'<li class="nav-item dropdown">';
+                     echo'<a class="nav-link " href="index.php?accion=listarusuarios" id="navbarDropdown"  aria-haspopup="true" aria-expanded="false">';
+                     echo'<i class="fas fa-user"></i> Listas Usuarios Activos </a>';
+                    echo' </li>';
+             }?>
+             
+           <?php  if(isset($_SESSION["logged"]) && $_SESSION["logged"]['Usuario']=='Administrador'){
+            
+                  echo'<li class="nav-item dropdown">';
+                  echo'<a class="nav-link " href="index.php?accion=solicitudesusuarios" id="navbarDropdown"  aria-haspopup="true" aria-expanded="false">';
+                  echo '<i class="fas fa-user"></i> Solicitudes Usuarios </a>';
+                  echo'</li>';
+               
+           }?>
+          
           
           <li class="nav-item">
                 <a class="nav-link" href="#" title="Cart"><i class="fas fa-cart-plus"></i> Cart</a>
