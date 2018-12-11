@@ -94,6 +94,14 @@ class controlador {
     include_once 'vistas/paraprincipal/solicitudesusuarios.php';
   }
   
+  public function modificarmeprofile() {
+    
+     
+    $this->vistaaceptado();
+    $this->includes();
+    include_once 'vistas/paraprincipal/modificarme.php';
+  }
+  
   
  public function loginaceptado() {
   
@@ -199,7 +207,10 @@ class controlador {
   public function modificar()
   {
      
-      
+       $guardar_usuario= $this->modelo->validar();
+     
+     if($guardar_usuario['saber']==true)
+     {
       if(isset($_POST['Actualizar']))
       {
         $id=$_POST['ID'] ;
@@ -233,6 +244,7 @@ class controlador {
       }
      
       }
+  }
       
       public function getmodificar()
       {
@@ -249,5 +261,61 @@ class controlador {
                
           }
       }
+      
+      public function modificarmeami()
+      {
+          
+           if(isset($_GET["ID"]) && (is_numeric($_GET['ID'])))
+          {
+              
+              
+              $id=$_GET['ID'];
+              $resultado= $this->modelo->listarperfil($id);
+              
+               $_SESSION['modificarme']=$resultado;
+               $this->modificarmeprofile();
+               
+          }
+      }
+      
+      public function actualizarperfil()
+  {
+      $guardar_usuario= $this->modelo->validar();
+     
+     if($guardar_usuario['saber']==true)
+     {
+      var_dump("holaguardar");
+        $id=$_POST['id'];
+        $nif=$_POST['nif'] ;
+        $nombre= $_POST['nombre'] ;
+        $apellido1= $_POST['apellido1'] ;
+        $apellido2= $_POST['apellido2'] ;
+        $telefonomovil=$_POST['telefonomovil'] ;
+        $telefonofijo=$_POST['telefonofijo'] ;
+        $email=$_POST['email'] ;
+        $departamento=$_POST['departamento'] ;
+        $paginaweb=$_POST['paginaweb'] ;
+        $direccionblog=$_POST['direccionblog'] ;
+        $cuentatwitter=$_POST['cuentatwitter'] ;
+        $usuariologin= $_POST['usuariologin'] ;
+        $foto=$guardar_usuario['nombrecompleto'];
+        
+        $resultado= $this->modelo->modificarlistarusuario($id,$nif, $nombre, $apellido1, $apellido2,  $telefonomovil, $telefonofijo,$email,  $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuariologin,$foto);
+        
+        if($resultado==true)
+        {
+            
+             $this->vistaaceptadoprofile();
+             var_dump('Felicidades te ha actualizado!');
+        }
+        else
+        {
+            $this->vistaaceptadoprofile();
+        }
+        
+      }
+     
+      }
   }
+  
   

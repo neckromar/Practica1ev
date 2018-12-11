@@ -73,20 +73,36 @@ class modelo {
               $errores=array();
           
           
-        $nif=$_POST['nif'] ;
-        $nombre= $_POST['nombre'] ;
-        $apellido1= $_POST['apellido1'] ;
-        $apellido2= $_POST['apellido2'] ;
-        $email= $_POST['email'] ;
-        $usuariologin= $_POST['usuariologin'] ;
-        $password= $_POST['password'] ;
-        $telefonomovil=$_POST['telefonomovil'] ;
-        $telefonofijo=$_POST['telefonofijo'] ;
-        $departamento=$_POST['departamento'] ;
-        $paginaweb=$_POST['paginaweb'] ;
-        $direccionblog=$_POST['direccionblog'] ;
-        $cuentatwitter=$_POST['cuentatwitter'] ;
-        $captcha=$_POST['g-recaptcha-response'];
+        $nif=isset($_POST['nif']) ? $_POST['nif']: false ;
+        $nombre= isset($_POST['nombre']) ? $_POST['nombre']: false ;
+        $apellido1= isset($_POST['apellido1']) ? $_POST['apellido1']: false ;
+        $apellido2= isset($_POST['apellido2']) ? $_POST['apellido2']: false ;
+        $email= isset($_POST['email']) ? $_POST['email']: false ;
+        $usuariologin= isset($_POST['usuariologin']) ? $_POST['usuariologin']: false ;
+        
+        if(isset($_POST['password']))
+        {
+            $password=  $_POST['password'] ;
+            //valdiar contraseña
+                 if(!empty($password) && !strlen($password)<8 && preg_match("/[a-zA-Z ]/", $password) && preg_match("/[0-9]/", $password) && preg_match("/[@#-_%&^+=!?.,<>]/", $password) )
+                     {
+                        $password_valido= true;
+                     }
+                else
+                    {
+                         $password_valido= false;
+                         $errores['password']= '<div class="alert alert-danger">La contraseña no es valida</div>';
+                    }
+        }
+        
+        $telefonomovil=isset($_POST['telefonomovil']) ? $_POST['telefonomovil']: false ;
+        $telefonofijo=isset($_POST['telefonofijo']) ? $_POST['telefonofijo']: false ;
+        $departamento=isset($_POST['departamento']) ? $_POST['departamento']: false ;
+        $paginaweb=isset($_POST['paginaweb']) ? $_POST['paginaweb']: false ;
+        $direccionblog=isset($_POST['direccionblog']) ? $_POST['direccionblog']: false ;
+        $cuentatwitter=isset($_POST['cuentatwitter']) ? $_POST['cuentatwitter']: false ;
+
+        $captcha=$_POST['g-recaptcha-response'] ;
         
         $secret='6Le6vH8UAAAAAKyXBPdrKDzzFgueAqHXS31HOWgi';
        
@@ -182,16 +198,7 @@ class modelo {
             $usuariologin_valido= false;
             $errores['usuariologin']= "<div class='alert alert-danger'>El nombre de usuario para el login no es valido</div>";
         }
-        //valdiar contraseña
-        if(!empty($password) && !strlen($password)<8 && preg_match("/[a-zA-Z ]/", $password) && preg_match("/[0-9]/", $password) && preg_match("/[@#-_%&^+=!?.,<>]/", $password) )
-        {
-           $password_valido= true;
-        }
-        else
-        {
-            $password_valido= false;
-            $errores['password']= '<div class="alert alert-danger">La contraseña no es valida</div>';
-        }
+        
         
         //validar telefono movil
         if(!empty($telefonomovil) && preg_match('/^[6|7][0-9]{8}$/', $telefonomovil))
@@ -287,7 +294,7 @@ class modelo {
         }
         else
         {
-           
+            
             $_SESSION['errores']=$errores;
             
               header("Location:".$_SERVER['HTTP_REFERER']); 
@@ -380,7 +387,7 @@ public function validarlogininsertado()
          
     //Realizamos la consulta...
     try {  //Definimos la instrucción SQL  
-      $sql = "SELECT `Usuario`,`Nombre`, `Apellido1`, `Apellido2`,`Email`, `Departamento`,`Foto`,`UsuarioLogin`,`Aceptado` FROM usuarios WHERE `UsuarioLogin`=:usuario AND `Password`=:password ;";
+      $sql = "SELECT `ID`,`Usuario`,`Nombre`, `Apellido1`, `Apellido2`,`Email`, `Departamento`,`Foto`,`UsuarioLogin`,`Aceptado` FROM usuarios WHERE `UsuarioLogin`=:usuario AND `Password`=:password ;";
       $query = $this->conexion->prepare($sql);
       $query->execute(['usuario' => $usuario,'password'=>$password]);
         
@@ -554,7 +561,7 @@ public function modificarusuario($id){
        
        //compruebo si he recibido algo por el post del login
       try {
-       $sql = "SELECT `Nif`, `Nombre`, `Apellido1`, `Apellido2`, `Telefonomovil`, `Telefonofijo`,  `Departamento`, `Paginaweb`, `Direccionblog`, `Cuentatwitter`, `UsuarioLogin`,  `Foto` FROM usuarios WHERE `ID`= :id ";
+       $sql = "SELECT `ID`,`Nif`, `Nombre`, `Apellido1`, `Apellido2`, `Telefonomovil`, `Telefonofijo`, `Email`, `Departamento`, `Paginaweb`, `Direccionblog`, `Cuentatwitter`, `UsuarioLogin`,  `Foto` FROM usuarios WHERE `ID`= :id ";
         $query = $this->conexion->prepare($sql);
         $query->execute(['id'=>$id]);
         
@@ -577,11 +584,11 @@ public function modificarusuario($id){
 
     return $resultado;
   }
-  public function modificarperfilpropio($id,$nif, $nombre, $apellido1, $apellido2,  $telefonomovil, $telefonofijo,  $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuariologin,$foto){
+  public function modificarperfilpropio($id,$nif, $nombre, $apellido1, $apellido2,  $telefonomovil, $telefonofijo, $email, $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuariologin,$foto){
       try {
-        $sql = "UPDATE usuarios SET `Nif`=:nif,`Nombre`=:nombre,`Apellido1`=:apellido1,`Apellido2`=:apellido2,`Telefonomovil`=:telefonomovil,`Telefonofijo`=:telefonofijo,`Departamento`=:departamento,`Paginaweb`=:paginaweb,`Direccionblog`=:direccionblog,`Cuentatwitter`=:cuentatwitter,`UsuarioLogin`=:usuariologin,`Foto`=:foto WHERE `ID`=:id";
+        $sql = "UPDATE usuarios SET `Nif`=:nif,`Nombre`=:nombre,`Apellido1`=:apellido1,`Apellido2`=:apellido2,`Telefonomovil`=:telefonomovil,`Telefonofijo`=:telefonofijo,`Email`=:email,`Departamento`=:departamento,`Paginaweb`=:paginaweb,`Direccionblog`=:direccionblog,`Cuentatwitter`=:cuentatwitter,`UsuarioLogin`=:usuariologin,`Foto`=:foto WHERE `ID`=:id";
         $query = $this->conexion->prepare($sql);
-        $query->execute(['id'=>$id,'nif' => $nif, 'nombre'=>$nombre, 'apellido1'=>$apellido1 , 'apellido2'=> $apellido2 ,'telefonomovil' => $telefonomovil, 'telefonofijo'=>$telefonofijo,'departamento'=>$departamento,'paginaweb'=>$paginaweb ,'direccionblog'=>$direccionblog,'cuentatwitter'=>$cuentatwitter,'usuariologin'=>$usuariologin ,'foto'=>$foto]);
+        $query->execute(['id'=>$id,'nif' => $nif, 'nombre'=>$nombre, 'apellido1'=>$apellido1 , 'apellido2'=> $apellido2 ,'telefonomovil' => $telefonomovil, 'telefonofijo'=>$telefonofijo,'email'=>$email, 'departamento'=>$departamento,'paginaweb'=>$paginaweb ,'direccionblog'=>$direccionblog,'cuentatwitter'=>$cuentatwitter,'usuariologin'=>$usuariologin ,'foto'=>$foto]);
 
         //Supervisamos que la consulta se realizó correctamente... 
         
