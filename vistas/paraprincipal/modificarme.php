@@ -12,7 +12,7 @@
                         
                          <div class="form-group" class="form-group required">
                             <label for="id" >ID</label>
-                            <input name='id'  type="text" class="form-control"  value="<?php  if(isset($_SESSION['modificarme'])){ echo $_SESSION['modificarme']['ID'];} ?>" readonly='readonly' />
+                            <input name='id'  type="number" class="form-control"  value="<?php  if(isset($_SESSION['modificarme'])){ echo $_SESSION['modificarme']['ID'];} ?>" readonly='readonly' />
                             
                         </div>
                         <div class="form-group" class="form-group required">
@@ -26,7 +26,7 @@
                             <input name="nombre"   type="text" class="form-control" value="<?php if(isset($_SESSION['modificarme'])){ echo ''.$_SESSION['modificarme']['Nombre'];} ?>" />
                           <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'nombre'):"" ?></span>
                           </div>
-                        <?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'password'):"" ?>
+                        
                          
                         <div class="form-group">
                             <img src="images//identification.png" /><label for="APELLIDO1">Apellidos*</label>
@@ -36,7 +36,11 @@
                             <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'apellido2'):"" ?></span>
                            
                         </div>
-                         
+                         <div class="form-group">
+                           <img src="images//password.png" /> <label for="PASSWORD">Contraseña*</label>
+                            <input name="password"   placeholder="PASSWORD" type="password" class="form-control" required/>
+                             <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'password'):"" ?></span>
+                        </div>
                          
                          <div class="form-group">
                              <img src="images//photo-camera.png" /><input type="hidden"  />
@@ -48,10 +52,10 @@
                          
                         <div class="form-group">
                             <img src="images//cellphone.png" /><label for="TELEFONOMOVIL">Telefono Movil*</label>
-                            <input name="telefonomovil"    type="number" class="form-control" value="<?php if(isset($_SESSION['modificarme'])){ echo $_SESSION['modificarme']['Telefonomovil'];} ?>"  />
+                            <input name="telefonomovil"    type="text" class="form-control" value="<?php if(isset($_SESSION['modificarme'])){ echo $_SESSION['modificarme']['Telefonomovil'];}?>"  />
                            <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'telefonomovil'):"" ?></span>
                             <img src="images//phone.png" /><label for="TELEFONOFIJO">Telefono Fijo*</label>
-                            <input name="telefonofijo"    type="number" class="form-control" value="<?php if(isset($_SESSION['modificarme'])){ echo $_SESSION['modificarme']['Telefonofijo'];} ?>" />
+                            <input name="telefonofijo"    type="text" class="form-control" value="<?php if(isset($_SESSION['modificarme'])){ echo $_SESSION['modificarme']['Telefonofijo'];} ?>" />
                            <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'telefonofijo'):"" ?></span>
                         </div>
                           

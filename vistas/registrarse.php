@@ -59,10 +59,10 @@
                          
                         <div class="form-group">
                             <img src="images//cellphone.png" /><label for="TELEFONOMOVIL">Telefono Movil*</label>
-                            <input name="telefonomovil"   placeholder="TELEFONO MOVIL" type="number" class="form-control" required />
+                            <input name="telefonomovil"   placeholder="TELEFONO MOVIL" type="text" class="form-control" required />
                             <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'telefonomovil'):"" ?></span>
                             <img src="images//phone.png" /><label for="TELEFONOFIJO">Telefono Fijo*</label>
-                            <input name="telefonofijo"   placeholder="TELEFONO FIJO" type="number" class="form-control" required/>
+                            <input name="telefonofijo"   placeholder="TELEFONO FIJO" type="text" class="form-control" required/>
                            <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'telefonofijo'):"" ?></span>
                         </div>
                          

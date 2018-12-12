@@ -73,34 +73,19 @@ class modelo {
               $errores=array();
           
           
-        $nif=isset($_POST['nif']) ? $_POST['nif']: false ;
-        $nombre= isset($_POST['nombre']) ? $_POST['nombre']: false ;
-        $apellido1= isset($_POST['apellido1']) ? $_POST['apellido1']: false ;
-        $apellido2= isset($_POST['apellido2']) ? $_POST['apellido2']: false ;
-        $email= isset($_POST['email']) ? $_POST['email']: false ;
-        $usuariologin= isset($_POST['usuariologin']) ? $_POST['usuariologin']: false ;
-        
-        if(isset($_POST['password']))
-        {
-            $password=  $_POST['password'] ;
-            //valdiar contraseña
-                 if(!empty($password) && !strlen($password)<8 && preg_match("/[a-zA-Z ]/", $password) && preg_match("/[0-9]/", $password) && preg_match("/[@#-_%&^+=!?.,<>]/", $password) )
-                     {
-                        $password_valido= true;
-                     }
-                else
-                    {
-                         $password_valido= false;
-                         $errores['password']= '<div class="alert alert-danger">La contraseña no es valida</div>';
-                    }
-        }
-        
-        $telefonomovil=isset($_POST['telefonomovil']) ? $_POST['telefonomovil']: false ;
-        $telefonofijo=isset($_POST['telefonofijo']) ? $_POST['telefonofijo']: false ;
-        $departamento=isset($_POST['departamento']) ? $_POST['departamento']: false ;
-        $paginaweb=isset($_POST['paginaweb']) ? $_POST['paginaweb']: false ;
-        $direccionblog=isset($_POST['direccionblog']) ? $_POST['direccionblog']: false ;
-        $cuentatwitter=isset($_POST['cuentatwitter']) ? $_POST['cuentatwitter']: false ;
+        $nif=$_POST['nif'] ;
+        $nombre= $_POST['nombre'];
+        $apellido1= $_POST['apellido1'] ;
+        $apellido2= $_POST['apellido2'] ;
+        $email= $_POST['email'];
+        $usuariologin= $_POST['usuariologin'];
+        $password= $_POST['password'];
+        $telefonomovil=$_POST['telefonomovil'];
+        $telefonofijo=$_POST['telefonofijo'];
+        $departamento=$_POST['departamento'];
+        $paginaweb=$_POST['paginaweb'];
+        $direccionblog=$_POST['direccionblog'];
+        $cuentatwitter=$_POST['cuentatwitter'];
 
         $captcha=$_POST['g-recaptcha-response'] ;
         
@@ -111,7 +96,7 @@ class modelo {
         
         if(!$captcha)
         {
-            $errores['captcha']= '<div class="alert alert-danger">Verifica el captcha </div>';
+            $errores['captcha']= 'Verifica el captcha ';
         }
         
         $response= file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$captcha");
@@ -125,7 +110,7 @@ class modelo {
         }
         else
         {
-            $errores['captcha']= '<div class="alert alert-danger">Error al comprobar el captcha </div>';
+            $errores['captcha']= 'Error al comprobar el captcha ';
         }
         
         
@@ -140,7 +125,7 @@ class modelo {
             else
             {
               $nif_valido= false;
-             $errores['nif']= '<div class="alert alert-danger">El nif no es valido</div>';
+             $errores['nif']= 'El nif no es valido';
              }
              
           
@@ -153,7 +138,7 @@ class modelo {
         else
         {
             $nombre_valido= false;
-            $errores['nombre']= "<div class='alert alert-danger'>El nombre no es valido</div>";
+            $errores['nombre']= "El nombre no es valido";
         }
         
         //validar apellido1
@@ -164,7 +149,7 @@ class modelo {
         else
         {
             $apellido1_valido= false;
-            $errores['apellido1']= '<div class="alert alert-danger">El primer apellido esta mal</div>';
+            $errores['apellido1']= 'El primer apellido esta mal';
         }
         //validar apellido2
         if(!empty($apellido2) && !is_numeric($apellido2) && !preg_match("/[0-9]/", $apellido2))
@@ -174,13 +159,23 @@ class modelo {
         else
         {
             $apellido2_valido= false;
-            $errores['apellido2']= '<div class="alert alert-danger">El segundo apellido  no es valido</div>';
+            $errores['apellido2']= 'El segundo apellido  no es valido';
         }
+        
+         if(!empty($password) && !strlen($password)<8 && preg_match("/[a-zA-Z ]/", $password) && preg_match("/[0-9]/", $password) && preg_match("/[@#-_%&^+=!?.,<>]/", $password) )
+              {
+                 $password_valido= true;
+              }
+         else
+              {
+                  $password_valido= false;
+                  $errores['password']= 'La contraseña no es valida';
+               }
         
         //validar email
         if(!empty($email) && !filter_var($email,FILTER_VALIDATE_EMAIL) ) 
         {
-            $errores['email']= '<div class="alert alert-danger">El email no es valido</div>';
+            $errores['email']= 'El email no es valido';
            $email_valido= true;
         }
         else
@@ -196,7 +191,7 @@ class modelo {
         else
         {
             $usuariologin_valido= false;
-            $errores['usuariologin']= "<div class='alert alert-danger'>El nombre de usuario para el login no es valido</div>";
+            $errores['usuariologin']= "El nombre de usuario para el login no es valido";
         }
         
         
@@ -208,7 +203,7 @@ class modelo {
         else
         {
             $telefonomovil_valido= false;
-            $errores['telefonomovil']= '<div class="alert alert-danger">El telefono movil no es valido</div>';
+            $errores['telefonomovil']= 'El telefono movil no es valido';
         }
         
         //validar telefono fijo
@@ -219,7 +214,7 @@ class modelo {
         else
         {
             $telefonofijo_valido= false;
-            $errores['telefonofijo']= '<div class="alert alert-danger">El telefono fijo no es valido</div>';
+            $errores['telefonofijo']= 'El telefono fijo no es valido';
         }
         
         //validar departamento
@@ -230,7 +225,7 @@ class modelo {
         else
         {
             $departamento_valido= false;
-            $errores['departamento']= '<div class="alert alert-danger">El departamento no es valido</div>';
+            $errores['departamento']= 'El departamento no es valido';
         }
         
         
@@ -244,11 +239,11 @@ class modelo {
             $extension = $arrayArchivo['extension'];
             // Comprobamos la extensión del archivo
             if(!in_array($extension, $extensionesValidas)){
-                $errores['foto'] = "<div class='alert alert-danger'>La extensión del archivo no es válida o no se ha subido ningún archivo</div>";
+                $errores['foto'] = "La extensión del archivo no es válida o no se ha subido ningún archivo";
             }
             // Comprobamos el tamaño del archivo
             if($filesize > $max_file_size){
-                $erroresfoto['foto'] = "<div class='alert alert-danger'>La imagen debe de tener un tamaño inferior a 50 kb</div>";
+                $erroresfoto['foto'] = "La imagen debe de tener un tamaño inferior a 50 kb";
             }
             // Comprobamos y renombramos el nombre del archivo
             $nombreArchivo = $arrayArchivo['filename'];
@@ -584,23 +579,18 @@ public function modificarusuario($id){
 
     return $resultado;
   }
-  public function modificarperfilpropio($id,$nif, $nombre, $apellido1, $apellido2,  $telefonomovil, $telefonofijo, $email, $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuariologin,$foto){
+  public function modificarperfilpropio($id,$nif, $nombre, $apellido1, $apellido2, $password, $telefonomovil, $telefonofijo, $email, $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuariologin,$foto){
       try {
-        $sql = "UPDATE usuarios SET `Nif`=:nif,`Nombre`=:nombre,`Apellido1`=:apellido1,`Apellido2`=:apellido2,`Telefonomovil`=:telefonomovil,`Telefonofijo`=:telefonofijo,`Email`=:email,`Departamento`=:departamento,`Paginaweb`=:paginaweb,`Direccionblog`=:direccionblog,`Cuentatwitter`=:cuentatwitter,`UsuarioLogin`=:usuariologin,`Foto`=:foto WHERE `ID`=:id";
+        $sql = "UPDATE usuarios SET `Nif`=:nif,`Nombre`=:nombre,`Apellido1`=:apellido1,`Apellido2`=:apellido2,`Password`=:password`,`Telefonomovil`=:telefonomovil,`Telefonofijo`=:telefonofijo,`Email`=:email,`Departamento`=:departamento,`Paginaweb`=:paginaweb,`Direccionblog`=:direccionblog,`Cuentatwitter`=:cuentatwitter,`UsuarioLogin`=:usuariologin,`Foto`=:foto WHERE `ID`=:id";
         $query = $this->conexion->prepare($sql);
-        $query->execute(['id'=>$id,'nif' => $nif, 'nombre'=>$nombre, 'apellido1'=>$apellido1 , 'apellido2'=> $apellido2 ,'telefonomovil' => $telefonomovil, 'telefonofijo'=>$telefonofijo,'email'=>$email, 'departamento'=>$departamento,'paginaweb'=>$paginaweb ,'direccionblog'=>$direccionblog,'cuentatwitter'=>$cuentatwitter,'usuariologin'=>$usuariologin ,'foto'=>$foto]);
+        $query->execute(['id'=>$id,'nif' => $nif, 'nombre'=>$nombre, 'apellido1'=>$apellido1 , 'apellido2'=> $apellido2 ,'password'=>$password,'telefonomovil' =>$telefonomovil, 'telefonofijo'=>$telefonofijo,'email'=>$email, 'departamento'=>$departamento,'paginaweb'=>$paginaweb ,'direccionblog'=>$direccionblog,'cuentatwitter'=>$cuentatwitter,'usuariologin'=>$usuariologin ,'foto'=>$foto]);
 
         //Supervisamos que la consulta se realizó correctamente... 
         
-             if($query)
-                {
+             
                   
-                    $resultado=true;
-                }
-            else
-                {
-                    $resultado=false;
-                }
+                    $resultado=$query;
+              
       } catch (PDOException $ex) {
         $resultado = $ex->getMessage();
         //die();

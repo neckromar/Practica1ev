@@ -284,12 +284,13 @@ class controlador {
      
      if($guardar_usuario['saber']==true)
      {
-      var_dump("holaguardar");
+     
         $id=$_POST['id'];
         $nif=$_POST['nif'] ;
         $nombre= $_POST['nombre'] ;
         $apellido1= $_POST['apellido1'] ;
         $apellido2= $_POST['apellido2'] ;
+        $password= sha1($_POST['password'] );
         $telefonomovil=$_POST['telefonomovil'] ;
         $telefonofijo=$_POST['telefonofijo'] ;
         $email=$_POST['email'] ;
@@ -300,21 +301,16 @@ class controlador {
         $usuariologin= $_POST['usuariologin'] ;
         $foto=$guardar_usuario['nombrecompleto'];
         
-        $resultado= $this->modelo->modificarlistarusuario($id,$nif, $nombre, $apellido1, $apellido2,  $telefonomovil, $telefonofijo,$email,  $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuariologin,$foto);
+        $resultado= $this->modelo->modificarperfilpropio($id,$nif, $nombre, $apellido1, $apellido2,$password,$telefonomovil, $telefonofijo,$email,  $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuariologin,$foto);
         
-        if($resultado==true)
-        {
+       
             
              $this->vistaaceptadoprofile();
              var_dump('Felicidades te ha actualizado!');
-        }
-        else
-        {
-            $this->vistaaceptadoprofile();
-        }
-        
+             var_dump($resultado);
+             echo $telefonomovil;
+      
       }
-     
       }
   }
   

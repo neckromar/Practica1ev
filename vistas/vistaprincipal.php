@@ -54,7 +54,7 @@
               
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-key"></i> Logout</a>
+            <a class="nav-link" href="index.php?accion=index"><i class="fas fa-key"></i> Logout</a>
           </li>
         </ul>
       </div>
