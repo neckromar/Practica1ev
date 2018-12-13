@@ -5,6 +5,7 @@
         <div class="col-md-6">
             <div class="login-box well">
                 
+                
                 <form action="index.php?accion=modificar" role="form" method="POST" enctype="multipart/form-data">
                      
                     
@@ -17,12 +18,14 @@
                         <div class="form-group" class="form-group required">
                             <img src="images//identity.png" /> <label for="nif" >NIF*</label>
                            <input name='nif'  type="text" class="form-control"  value="<?php  if(isset($_SESSION['modificar'])){ echo $_SESSION['modificar']['Nif'];} ?>" />
+                           <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'nif'):"" ?></span>
                           
                         </div>
                           
                         <div class="form-group">
                             <img src="images//student.png" /><label for="nombre">Nombre*</label>
                             <input name="nombre"   type="text" class="form-control" value="<?php if(isset($_SESSION['modificar'])){ echo ''.$_SESSION['modificar']['Nombre'];} ?>" />
+                            <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'nombre'):"" ?></span>
                           
                           </div>
                         
@@ -30,31 +33,26 @@
                         <div class="form-group">
                             <img src="images//identification.png" /><label for="APELLIDO1">Apellidos*</label>
                             <input name="apellido1"    type="text" class="form-control" value="<?php if(isset($_SESSION['modificar'])){ echo ''.$_SESSION['modificar']['Apellido1'];} ?>" />
-                            
+                            <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'apellido1'):"" ?></span>
                             <input name="apellido2"    type="text" class="form-control"  value="<?php if(isset($_SESSION['modificar'])){ echo ''.$_SESSION['modificar']['Apellido2'];} ?>"/>
-                           
+                           <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'apellido2'):"" ?></span>
                         </div>
                          
-                         <div class="form-group">
-                             <img src="images//photo-camera.png" /><input type="hidden"  />
-                             <input type="text" name="foto" value="<?php if(isset($_SESSION['modificar'])){ echo ''.$_SESSION['modificar']['Foto'];} ?>" />
-                             
-                         </div>
-                         
+                        
                          
                         <div class="form-group">
                             <img src="images//cellphone.png" /><label for="TELEFONOMOVIL">Telefono Movil*</label>
                             <input name="telefonomovil"    type="number" class="form-control" value="<?php if(isset($_SESSION['modificar'])){ echo $_SESSION['modificar']['Telefonomovil'];} ?>"  />
-                           
+                           <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'telefonomovil'):"" ?></span>
                             <img src="images//phone.png" /><label for="TELEFONOFIJO">Telefono Fijo*</label>
                             <input name="telefonofijo"    type="number" class="form-control" value="<?php if(isset($_SESSION['modificar'])){ echo $_SESSION['modificar']['Telefonofijo'];} ?>" />
-                           
+                           <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'telefonofijo'):"" ?></span>
                         </div>
                          
                         <div class="form-group">
                             <img src="images//conversation.png" /><label for="DEPARTAMENTO">Departamento*</label>
                             <input name="departamento" type="text" class="form-control" value="<?php if(isset($_SESSION['modificar'])){ echo $_SESSION['modificar']['Departamento'];} ?>" />
-                          
+                          <span ><?php  echo isset($_SESSION['errores']) ? mostrarError($_SESSION['errores'], 'departamento'):"" ?></span>
                         </div>
                          
                         <div class="form-group">

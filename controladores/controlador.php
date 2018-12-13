@@ -105,14 +105,14 @@ class controlador {
   
  public function loginaceptado() {
   
-    $usuario_valido=$this->modelo->validarlogininsertado();
+    $usuario_valido=$this->validarlogininsertado();
     if($usuario_valido==true)
      { 
             $usuario=$_POST['usuario'];
             $password=sha1($_POST['passwordlogin']);
             $resultado= $this->modelo->validarlogin($usuario,$password);
           
-             if($resultado['Usuario'] == 'Administrador' || $resultado['Usuario']=='Profesor')
+             if($resultado['Usuario'] == 'Administrador' || $resultado['Usuario']=='Profesor' || $resultado['Usuario']=='profesor')
                 {
                  if($resultado['Aceptado']==1)
                  {
@@ -167,7 +167,7 @@ class controlador {
 
   public function registro()
   {
-     $guardar_usuario= $this->modelo->validar();
+     $guardar_usuario= $this->validar();
      
      if($guardar_usuario['saber']==true)
      {
@@ -207,12 +207,11 @@ class controlador {
   public function modificar()
   {
      
-       $guardar_usuario= $this->modelo->validar();
+     $guardar_usuario= $this->validar();
      
      if($guardar_usuario['saber']==true)
      {
-      if(isset($_POST['Actualizar']))
-      {
+     
         $id=$_POST['ID'] ;
         $nif=$_POST['nif'] ;
         $nombre= $_POST['nombre'] ;
@@ -225,10 +224,9 @@ class controlador {
         $direccionblog=$_POST['direccionblog'] ;
         $cuentatwitter=$_POST['cuentatwitter'] ;
         $usuario= $_POST['usuario'] ;
-        $foto=$_POST['foto'];
         $activado=$_POST['activado'];
         
-        $resultado= $this->modelo->modificarlistarusuario($id,$nif, $nombre, $apellido1, $apellido2,  $telefonomovil, $telefonofijo,  $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuario,$foto,$activado);
+        $resultado= $this->modelo->modificarlistarusuario($id,$nif, $nombre, $apellido1, $apellido2,  $telefonomovil, $telefonofijo,  $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuario,$activado);
         
         if($resultado==true)
         {
@@ -238,11 +236,9 @@ class controlador {
         }
         else
         {
-            $this->listarusuarios();
+            $this->vistaaceptado();
         }
-        
-      }
-     
+       
       }
   }
       
@@ -280,11 +276,13 @@ class controlador {
       
       public function actualizarperfil()
   {
-      $guardar_usuario= $this->modelo->validar();
+      $guardar_usuario= $this->validar();
      
      if($guardar_usuario['saber']==true)
      {
-     
+         if(isset($_POST['Actualizarme'])){
+             
+         
         $id=$_POST['id'];
         $nif=$_POST['nif'] ;
         $nombre= $_POST['nombre'] ;
@@ -300,18 +298,329 @@ class controlador {
         $cuentatwitter=$_POST['cuentatwitter'] ;
         $usuariologin= $_POST['usuariologin'] ;
         $foto=$guardar_usuario['nombrecompleto'];
+         $resultado= $this->modelo->modificarperfilpropio($id,$nif, $nombre, $apellido1, $apellido2,$password,$telefonomovil, $telefonofijo,$email,  $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuariologin,$foto);
         
-        $resultado= $this->modelo->modificarperfilpropio($id,$nif, $nombre, $apellido1, $apellido2,$password,$telefonomovil, $telefonofijo,$email,  $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuariologin,$foto);
-        
-       
-            
-             $this->vistaaceptadoprofile();
+        if($resultado==true)
+        {
+            $this->vistaaceptadoprofile();
              var_dump('Felicidades te ha actualizado!');
-             var_dump($resultado);
-             echo $telefonomovil;
+        }
+        else
+        {
+            $this->modificarmeprofile();
+            
+        }
+         }
+       
+          
+      }
+      }
       
-      }
-      }
+  public function validar()
+  {
+    if(isset($_POST))
+    {
+         $directorioSubida = "fotos/";
+         $max_file_size = "51200";
+         $extensionesValidas = array("jpg", "png", "gif");
+         
+        //array errores
+              $errores=array();
+          
+          
+        $nif=!empty($_POST['nif']) ? $_POST['nif']: false ;
+        $nombre= !empty($_POST['nombre']) ? $_POST['nombre']: false ;
+        $apellido1= !empty($_POST['apellido1']) ? $_POST['apellido1']: false ;
+        $apellido2= !empty($_POST['apellido2']) ? $_POST['apellido2']: false ;
+        $email= !empty($_POST['email']) ? $_POST['email']: false ;
+        $usuariologin= !empty($_POST['usuariologin']) ? $_POST['usuariologin']: false ;
+        $password=  !empty($_POST['password'])? $_POST['password']: false ; 
+        $telefonomovil=!empty($_POST['telefonomovil']) ? $_POST['telefonomovil']: false ;
+        $telefonofijo=!empty($_POST['telefonofijo']) ? $_POST['telefonofijo']: false ;
+        $departamento=!empty($_POST['departamento']) ? $_POST['departamento']: false ;
+        $paginaweb=!empty($_POST['paginaweb']) ? $_POST['paginaweb']: false ;
+        $direccionblog=!empty($_POST['direccionblog']) ? $_POST['direccionblog']: false ;
+        $cuentatwitter=!empty($_POST['cuentatwitter']) ? $_POST['cuentatwitter']: false ;
+
+        if($_GET['accion'] != 'modificar' )
+        {
+             $captcha=!empty($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] :false ;
+        
+            $secret='6Le6vH8UAAAAAKyXBPdrKDzzFgueAqHXS31HOWgi';
+       
+        
+            //verifica el captcha
+        
+             if(!$captcha)
+                {
+                     $errores['captcha']= 'Verifica el captcha ';
+                }
+        
+                $response= file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$captcha");
+        
+        
+                $arr= json_decode($response,TRUE);
+        
+                if($arr['success'])
+                {}
+                else
+                {
+                     $errores['captcha']= 'Error al comprobar el captcha ';
+                }
+        
+        }
+        
+        
+        //validar nif
+       
+          if(!empty($nif) &&  preg_match('/^[0-9]{8}[A-Z]{1}$/', $nif))
+            {
+                $nif_valido= true;
+             }
+            else
+            {
+              $nif_valido= false;
+             $errores['nif']= 'El nif no es valido';
+             }
+             
+          
+        
+        //validar nombre
+        if(!empty($nombre) && !is_numeric($nombre) && !preg_match("/[0-9]/", $nombre))
+        {
+           $nombre_valido= true;
+        }
+        else
+        {
+            $nombre_valido= false;
+            $errores['nombre']= "El nombre no es valido";
+        }
+        
+        //validar apellido1
+        if(!empty($apellido1) && !is_numeric($apellido1) && !preg_match("/[0-9]/", $apellido1))
+        {
+           $apellido1_valido= true;
+        }
+        else
+        {
+            $apellido1_valido= false;
+            $errores['apellido1']= 'El primer apellido esta mal';
+        }
+        //validar apellido2
+        if( !empty($apellido2) && !is_numeric($apellido2) && !preg_match("/[0-9]/", $apellido2))
+        {
+           $apellido2_valido= true;
+        }
+        else
+        {
+            $apellido2_valido= false;
+            $errores['apellido2']= 'El segundo apellido  no es valido';
+        }
+        if($_GET['accion'] != 'modificar')
+        {
+         if(!empty($password) && !strlen($password)<8 && preg_match("/[a-zA-Z ]/", $password) && preg_match("/[0-9]/", $password) && preg_match("/[@#-_%&^+=!?.,<>]/", $password) )
+              {
+                 $password_valido= true;
+              }
+         else
+              {
+                  $password_valido= false;
+                  $errores['password']= 'La contraseña no es valida';
+               }
+        }
+        
+        //validar email
+        if(!empty($email) && !filter_var($email,FILTER_VALIDATE_EMAIL) ) 
+        {
+            $errores['email']= 'El email no es valido';
+           $email_valido= true;
+        }
+        else
+        {
+            $email_valido= false;
+            
+        }
+        
+        //validar usuariologin
+        if($_GET['accion'] != 'modificar')
+        {
+            if( !empty($usuariologin) && !is_numeric($usuariologin) && !preg_match("/[0-9]/", $usuariologin))
+            {
+                $usuariologin_valido= true;
+            }
+            else
+            {
+                 $usuariologin_valido= false;
+                $errores['usuariologin']= "El nombre de usuario para el login no es valido";
+            }
+        }
+        
+        //validar telefono movil
+        if(!empty($telefonomovil) && preg_match('/^[6|7][0-9]{8}$/', $telefonomovil))
+        {
+           $telefonomovil_valido= true;
+        }
+        else
+        {
+            $telefonomovil_valido= false;
+            $errores['telefonomovil']= 'El telefono movil no es valido';
+        }
+        
+        //validar telefono fijo
+        if(!empty($telefonofijo) && preg_match('/^[9][0-9]{8}$/', $telefonofijo))
+        {
+           $telefonofijo_valido= true;
+        }
+        else
+        {
+            $telefonofijo_valido= false;
+            $errores['telefonofijo']= 'El telefono fijo no es valido';
+        }
+        
+        //validar departamento
+        if(!empty($departamento) && !is_numeric($departamento) && !preg_match("/[0-9]/", $departamento))
+        {
+           $departamento_valido= true;
+        }
+        else
+        {
+            $departamento_valido= false;
+            $errores['departamento']= 'El departamento no es valido';
+        }
+        
+        
+        if($_GET['accion'] != 'modificar' )
+        {
+            if(empty($_FILES['imagen']['size']))
+            {}
+            else
+                {
+            $nombreArchivo = $_FILES['imagen']['name'];
+            $filesize = $_FILES['imagen']['size'];
+            $directorioTemp = $_FILES['imagen']['tmp_name'];
+            $tipoArchivo = $_FILES['imagen']['type'];
+            $arrayArchivo = pathinfo($nombreArchivo);
+            $extension = $arrayArchivo['extension'];
+            // Comprobamos la extensión del archivo
+            if(!in_array($extension, $extensionesValidas)){
+                $errores['foto'] = "La extensión del archivo no es válida o no se ha subido ningún archivo";
+            }
+            // Comprobamos el tamaño del archivo
+            if($filesize > $max_file_size){
+                $erroresfoto['foto'] = "La imagen debe de tener un tamaño inferior a 50 kb";
+            }
+            // Comprobamos y renombramos el nombre del archivo
+            $nombreArchivo = $arrayArchivo['filename'];
+            $nombreArchivo = preg_replace("/[^A-Z0-9._-]/i", "_", $nombreArchivo);
+            $nombreArchivo = time() . "-" .$nombreArchivo;
+            
+            }
+        }
+        // se ha cambiado la variable que devuelve el return con varias posiciones, la del true o false como antes
+         // y el nombre del archivo para asi pasarlo por el controlador y que lo inserte en la bd
+        $guardar_usuario=array();
+         $guardar_usuario['saber']=false;
+         
+        if(count($errores)==0)
+        {
+            // Desplazamos el archivo si no hay errores y se comprueba si existe la ruta
+                     if(!is_dir("fotos"))
+                    { 
+                         $dir = mkdir("fotos", 0777, true); 
+                    }
+                        else{ $dir = true; }
+                    // Ya verificado que la carpeta uploads existe movemos el fichero seleccionado a dicha carpeta
+                if($dir)
+                    {
+                       if($_GET['accion'] != 'modificar' )
+                          {
+                           if(empty($_FILES['imagen']['size']))
+                             { 
+                               $guardar_usuario['nombrecompleto']='fotos/usuario.png';
+                               $guardar_usuario['saber']=true; 
+                             
+                             }
+                            else
+                               {
+                                    // le he añadido la busqueda del directorio el fotos/ para buscarlo directamente al iniciar sesion
+                                        $nombreCompleto = "fotos/".$nombreArchivo.".".$extension;
+                                    //directorio temporal es en el queesta , se le pasa el directorio de subida y se concatena con el nombre
+                                    //completo que es la fecha actual un guion y el nombre mas la extension
+                                     $pruebaimagen= move_uploaded_file($directorioTemp,$nombreCompleto );
+                           
+                                     if($pruebaimagen)
+                                         { 
+                                                 $guardar_usuario['nombrecompleto']=$nombreCompleto;
+                                                $guardar_usuario['saber']=true;
+                                    
+                                        }
+                                      else{
+                                                var_dump('ha fallado la subida del archivo');
+                                          }
+                                           $guardar_usuario['saber']=true; 
+                              }      
+                           
+                          }
+                           $guardar_usuario['saber']=true; 
+                    }
+         }
+        else
+        {
+            
+            $_SESSION['errores']=$errores;
+             header("Location:".$_SERVER['HTTP_REFERER']); 
+              
+        }
+   
+    }
+    return $guardar_usuario;
+  }
+     
+  public function validarlogininsertado()
+  {
+    
+    if(isset($_POST['acceder']))
+    {
+        //array errores
+         $errores=array();
+         
+         $usuario=$_POST['usuario'];
+         $password=$_POST['passwordlogin'];
+         
+         if(!empty($usuario) && !is_numeric($usuario) && !preg_match("/[0-9]/", $usuario))
+        {
+           $usuario_valido= true;
+        }
+        else
+        {
+            $usuario_valido= false;
+            $errores['usuario']= "<div class='alert alert-danger'>El usuario no es valido por los valores</div>";
+        }
+        if(!empty($password) && !strlen($password)<8 && preg_match("/[a-zA-Z ]/", $password) && preg_match("/[0-9]/", $password) && preg_match("/[@#-_%&^+=!?.,<>]/", $password) )
+        {
+           $password_valido= true;
+        }
+        else
+        {
+            $password_valido= false;
+            $errores['password']= '<div class="alert alert-danger">La contraseña no es valida</div>';
+        }
+        
+        $usuario_valido=false;
+        if(count($errores)==0)
+        {
+            $usuario_valido=true;
+        }
+        else
+        {
+            $_SESSION['errores']=$errores;
+             
+        }
+        
+        
+    }
+    return $usuario_valido;
+  }
   }
   
   
