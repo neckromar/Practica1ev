@@ -1,9 +1,11 @@
 <div  style="width:20%;margin-top:5%">
     
                 <div class="card-body">
-                    <?php  if(isset($_SESSION["solicitudes"])){
+                    <?php  if(isset($_SESSION["solicitudes"]))
+                        {
                          echo '<table border=1 class="table" ><tr class="table-primary">';
-                         
+                         if(count($_SESSION["solicitudes"])!= 0)
+                          {
                          foreach ($_SESSION["solicitudes"][0] as $titulo => $valor)
                         {
                             echo '<th>'.$titulo.'</th>';
@@ -32,7 +34,9 @@
                                 echo"</tr>";
                              }
                         echo "</table>";
-                    } ?>
+                    }else
+                    {}
+                    }?>
                 </div>
     
        </div>

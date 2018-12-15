@@ -236,7 +236,31 @@ class modelo {
     return $resultado;
   }
 
+public function recogertodosloscorreos()
+{
+    try {
+        $sql = "SELECT `Nombre`, `Apellido1`, `Apellido2`, `Email`, `Aceptado`  FROM usuarios";
+        $query = $this->conexion->query($sql);
+        
+        //Supervisamos que la consulta se realizó correctamente... 
+        $fila = $query->fetchAll(PDO::FETCH_ASSOC);
+             if($query)
+                {
+                 
+                    $resultado=$fila;
+                }
+            else
+                {
+                    $resultado='';
+                }
+      } catch (PDOException $ex) {
+        $resultado = $ex->getMessage();
+        //die();
+      }
+    
 
+    return $resultado;
+}
 
 public function modificarlistarusuario($id,$nif, $nombre, $apellido1, $apellido2,  $telefonomovil, $telefonofijo,  $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuario,$activado){
       try {

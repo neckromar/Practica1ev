@@ -115,6 +115,13 @@ class controlador {
     $this->includes();
     include_once 'vistas/paraprincipal/modificarme.php';
   }
+  public function vistaenviocorreos() {
+    
+     
+    $this->vistaaceptado();
+    $this->includes();
+    include_once 'vistas/paraprincipal/enviocorreos.php';
+  }
   
   
  public function loginaceptado() {
@@ -186,8 +193,14 @@ class controlador {
                
         
      }
-     
-  
+     public function  enviocorreos()
+     {
+         $resultado= $this->modelo->recogertodosloscorreos();
+         $_SESSION["todosloscorreos"]=$resultado;
+         $this->vistaenviocorreos();
+     }
+
+
      public function registrodeladmin() {
          
       $this->includes();
@@ -290,12 +303,12 @@ class controlador {
         
         if($resultado==true)
         {
-            $_SESSION['errores']['modificaciones']='<strong>FELICIDADES!</strong>Se ha actualizado correctamente!';
             $this->listarusuarios();
-             
+            $_SESSION['errores']['modificaciones']='<strong>FELICIDADES!</strong>Se ha actualizado correctamente!';
         }
         else
         {
+          
             $this->vistaaceptado();
         }
        

@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html>
-    <title><?= $parametros["tituloventana"] ?> </title>
-  <head>
-   
+    
+    <head>
       <script src='https://www.google.com/recaptcha/api.js'></script>
-      
-  </head>
+    </head>
   <body >
   <div class="container">
     <div class="row">

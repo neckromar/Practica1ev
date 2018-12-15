@@ -33,7 +33,7 @@
                
            }?>
             
-             <?php  if(isset($_SESSION["logged"]) && $_SESSION["logged"]['Usuario']=='Administrador'){
+           <?php  if(isset($_SESSION["logged"]) && $_SESSION["logged"]['Usuario']=='Administrador'){
             
                   echo'<li class="nav-item dropdown">';
                   echo'<a class="nav-link " href="index.php?accion=registrarporadmin" id="navbarDropdown"  aria-haspopup="true" aria-expanded="false">';
@@ -41,11 +41,16 @@
                   echo'</li>';
                
            }?>
+            
+            <?php  if(isset($_SESSION["logged"]) && $_SESSION["logged"]['Usuario']=='Administrador'){
+            
+                  echo'<li class="nav-item dropdown">';
+                  echo'<a class="nav-link " href="index.php?accion=enviocorreos" id="navbarDropdown"  aria-haspopup="true" aria-expanded="false">';
+                  echo '<i class="fas fa-user"></i> Enviar Correos </a>';
+                  echo'</li>';
+               
+           }?>
           
-          
-          <li class="nav-item">
-                <a class="nav-link" href="#" title="Cart"><i class="fas fa-cart-plus"></i> Cart</a>
-          </li>
           
           
           <li class="nav-item">
