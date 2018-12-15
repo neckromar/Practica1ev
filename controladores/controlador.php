@@ -104,7 +104,7 @@ class controlador {
   
   
  public function loginaceptado() {
-  
+     $this->includes();
     $usuario_valido=$this->validarlogininsertado();
     if($usuario_valido==true)
      { 
@@ -122,20 +122,22 @@ class controlador {
                  }
                  else
                  {
+                     $_SESSION['errores']['noaceptado']='<strong>Cuidado!</strong> No has sido aceptado todavia , espera.';
                      $this->index();
-                     var_dump('El usuario  no fue aceptado');
+                   
                  }
                 }
                 else
                 {
+                    $_SESSION['errores']['noaceptado']='<strong>Cuidado!</strong> Has fallado al conectarte.';
                     $this->index();
-                    var_dump('El usuario no es valido ');
+                     
                 }
             
      }
      else
         {
-         var_dump("No se ha podido conectar");
+         $_SESSION['errores']['noaceptado']='<strong>Cuidado!</strong> No te has podido loguear.';
             $this->index();
         }
     
@@ -150,8 +152,16 @@ class controlador {
          
         $_SESSION["listado"]=$resultado;
         $this->vistaaceptadolistar();
-               
         
+        /*if(isset($_GET['pagina']) && is_numeric($_GET['pagina']))
+        {
+            $resultado_mod= $this->modelo->listar($_GET['pagina']);
+        }
+        else
+        {
+            header("Location: index.php?accion=listarusuarios&pagina=1");
+        }
+        */
    }
    public function solicitudesusuarios()
   {
@@ -190,14 +200,33 @@ class controlador {
             
         if($resultado == true)
         {
-           
-            $this->index();
+           if(isset($_SESSION['logged']))
+           {
+               $this->vistaaceptado();
+               var_dump('Felicidades');
+           }
+           else
+           {
+               $this->index();
             var_dump('Felicidades');
+           }
+            
         }
         else
         {
-            $this->registrarse();
-            var_dump('Algo ha fallado');
+            if(isset($_SESSION['logged']))
+           {
+                $this->vistaaceptado();
+               $this->registrarse();
+                var_dump('Algo ha fallado');
+           }
+           else
+           {
+              $this->vistaaceptado();
+               $this->registrarse();
+                var_dump('Algo ha fallado');
+           }
+           
         }
         
      }
@@ -594,7 +623,7 @@ class controlador {
         else
         {
             $usuario_valido= false;
-            $errores['usuario']= "<div class='alert alert-danger'>El usuario no es valido por los valores</div>";
+            $errores['usuario']= "El usuario no es valido por los valores";
         }
         if(!empty($password) && !strlen($password)<8 && preg_match("/[a-zA-Z ]/", $password) && preg_match("/[0-9]/", $password) && preg_match("/[@#-_%&^+=!?.,<>]/", $password) )
         {
@@ -603,7 +632,7 @@ class controlador {
         else
         {
             $password_valido= false;
-            $errores['password']= '<div class="alert alert-danger">La contraseña no es valida</div>';
+            $errores['password']= 'La contraseña no es valida';
         }
         
         $usuario_valido=false;
@@ -620,6 +649,12 @@ class controlador {
         
     }
     return $usuario_valido;
+  }
+  
+  public function adminregistrando()
+  {
+      $this->vistaaceptado();
+      $this->registrarse();
   }
   }
   

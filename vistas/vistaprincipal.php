@@ -32,6 +32,15 @@
                   echo'</li>';
                
            }?>
+            
+             <?php  if(isset($_SESSION["logged"]) && $_SESSION["logged"]['Usuario']=='Administrador'){
+            
+                  echo'<li class="nav-item dropdown">';
+                  echo'<a class="nav-link " href="index.php?accion=adminregistrando" id="navbarDropdown"  aria-haspopup="true" aria-expanded="false">';
+                  echo '<i class="fas fa-user"></i> Añadir Usuario </a>';
+                  echo'</li>';
+               
+           }?>
           
           
           <li class="nav-item">
@@ -49,7 +58,7 @@
               
               <a class="nav-link" href="index.php?accion=vistaaceptadoprofile"><i class="fas fa-user"></i> 
             <?php  if(isset($_SESSION["logged"])){
-            echo '  '.$_SESSION["logged"]["UsuarioLogin"];}?>
+            echo '  '.$_SESSION["logged"]["UsuarioLogin"].'( '.$_SESSION["logged"]["Usuario"].' )';}?>
             </a>
               
           </li>

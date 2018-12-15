@@ -43,6 +43,7 @@
                             <a  href="index.php?accion=registrarse"> Registro </a>
                         </div>
                     </form>
+                 <span ><?php  echo isset($_SESSION['errores']) ?  mostrarError($_SESSION['errores'],'noaceptado'):"" ?></span>
                 <?php borrarErrores() ?>
             </div>
         </div>

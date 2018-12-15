@@ -157,23 +157,51 @@ class modelo {
       return $resultado;
   }
 
-  public function listarusuarios() {
+  public function listarusuarios(){
     
       try {
-        $sql = "SELECT `ID`, `Nif`, `Nombre`, `Apellido1`, `Apellido2`, `Telefonomovil`, `Telefonofijo`, `Email`, `Departamento`,  `Usuario`, `UsuarioLogin`  FROM usuarios WHERE `Aceptado`=1 ";
+          
+           
+        $sql = "SELECT `ID`, `Nif`, `Nombre`, `Apellido1`, `Apellido2`, `Telefonomovil`, `Telefonofijo`, `Email`, `Departamento`,  `Usuario`, `UsuarioLogin`  FROM usuarios WHERE `Aceptado`=1  ";
+       // $sql_saberfilas="SELECT * FROM usuarios";
+        
         $query = $this->conexion->query($sql);
+       // $total = $this->conexion->query($sql_saberfilas);
+        
+         
+        
+        
         
         //Supervisamos que la consulta se realizó correctamente... 
         $fila = $query->fetchAll(PDO::FETCH_ASSOC);
-             if($query)
-                {
+       // $total=$total->fetchAll(PDO::FETCH_ASSOC);
+        
+      /*  $pagina = $_GET["pagina"]; 
+                    if (!$pagina) 
+                        { 
+                            $inicio = 0; 
+                             $pagina=1; 
+                        } 
+                     else 
+                         { 
+                             $inicio = ($pagina - 1) * $TAMANO_PAGINA; 
+                        }
+           
+                       
+                        $num_total_registros =count($total);
+                         //calculo el total de páginas 
+                        $total_paginas = ceil($num_total_registros / $TAMANO_PAGINA);
+         */       
+        
+         if($query)
+            {
                  
-                    $resultado=$fila;
-                }
-            else
-                {
-                    $resultado='';
-                }
+               $resultado=$fila;
+            }
+         else
+            {
+                $resultado='';
+            }
       } catch (PDOException $ex) {
         $resultado = $ex->getMessage();
         //die();

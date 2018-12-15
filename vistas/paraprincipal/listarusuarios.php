@@ -1,8 +1,19 @@
 
-      <div  style="width:20%;margin-top:5%">
+      <div  style="margin-top:5%">
     
                 <div class="card-body">
-                    <?php  if(isset($_SESSION["listado"])){
+                    
+                    
+                    <?php  
+                    //Limito la busqueda 
+                    
+
+                    //examino la página a mostrar y el inicio del registro a mostrar 
+                    
+        
+                    
+                    
+                    if(isset($_SESSION["listado"])){
                          echo '<table border=1 class="table" ><tr class="table-primary">';
                          
                          foreach ($_SESSION["listado"][0] as $titulo => $valor)
@@ -27,12 +38,29 @@
                                 if($_SESSION["logged"]['Usuario']=='Administrador')
                                     {
                                      echo '<td>' . '<a href="index.php?accion=getmodificar&ID='.$_SESSION["listado"][$a]['ID'].'">Editar </a>'   . '</td>' ; 
-                               
-                                }
+                                    
+                                    }
                                
                                 echo"</tr>";
                              }
+                            
                         echo "</table>";
+                        
+                       /*
+                         if ($total_paginas > 1)
+                                     { 
+                                        for ($i=1;$i<=$total_paginas;$i++)
+                                        { 
+                                            if ($pagina == $i) 
+                                            //si muestro el índice de la página actual, no coloco enlace 
+                                            echo $pagina . " "; 
+                                            else 
+                                            //si el índice no corresponde con la página mostrada actualmente, coloco el enlace para ir a esa página 
+                                            echo "<a href='index.php?accion=listarusuarios?pagina=" . $i ."'>" . $i . "</a> ";
+                                        } 
+                                     }
+                        * 
+                        */
                     } ?>
                 </div>
     
