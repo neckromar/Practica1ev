@@ -36,7 +36,7 @@
              <?php  if(isset($_SESSION["logged"]) && $_SESSION["logged"]['Usuario']=='Administrador'){
             
                   echo'<li class="nav-item dropdown">';
-                  echo'<a class="nav-link " href="index.php?accion=adminregistrando" id="navbarDropdown"  aria-haspopup="true" aria-expanded="false">';
+                  echo'<a class="nav-link " href="index.php?accion=registrarporadmin" id="navbarDropdown"  aria-haspopup="true" aria-expanded="false">';
                   echo '<i class="fas fa-user"></i> Añadir Usuario </a>';
                   echo'</li>';
                
@@ -67,10 +67,16 @@
           </li>
         </ul>
       </div>
+      
       </div>
       
       
     </nav>
-   
+        <br>
+        <br>
+        <P>
+   <span ><?php  echo isset($_SESSION['errores']) ?  mostrarError($_SESSION['errores'],'aceptadoregistro',true):"" ?></span>
+   </P>
+    <?php borrarErrores() ?>
   
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>

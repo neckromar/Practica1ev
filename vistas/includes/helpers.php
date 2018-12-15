@@ -1,10 +1,17 @@
 <?php
 
-function mostrarError($errores,$campo){
+function mostrarError($errores,$campo,$booleano=false){
     $alerta='';
     if(isset($errores[$campo]) && !empty($campo))
     {
-        $alerta="<div class='alert alert-danger'>".$errores[$campo]."</div>";
+        if($booleano==true)
+        {
+             $alerta="<div class='alert alert-success'>".$errores[$campo]."</div>";
+        }
+        else
+        {
+          $alerta="<div class='alert alert-danger'>".$errores[$campo]."</div>";
+        }
     }
     
     return $alerta;

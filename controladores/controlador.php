@@ -47,6 +47,20 @@ class controlador {
     //Mostramos la página de inicio 
     include_once 'vistas/registrarse.php';
   }
+  
+  public function registrarporadmin() {
+    $parametros = [
+        "tituloventana" => "Registro"
+    ];
+    $this->includes();
+    $this->vistaaceptado();
+    //Mostramos la página de inicio 
+    include_once 'vistas/paraprincipal/registroporadmin.php';
+  }
+    
+    
+    
+  
    public function vistaaceptado() {
       $parametros = [
         "tituloventana" => "Bienvenido"
@@ -174,9 +188,9 @@ class controlador {
      }
      
   
-
-  public function registro()
-  {
+     public function registrodeladmin() {
+         
+      $this->includes();
      $guardar_usuario= $this->validar();
      
      if($guardar_usuario['saber']==true)
@@ -200,33 +214,50 @@ class controlador {
             
         if($resultado == true)
         {
-           if(isset($_SESSION['logged']))
-           {
+               $_SESSION['errores']['aceptadoregistro']='<strong>FELICIDADES!</strong>Felicidades has registrado al usuario.';
                $this->vistaaceptado();
-               var_dump('Felicidades');
-           }
-           else
-           {
-               $this->index();
-            var_dump('Felicidades');
-           }
-            
         }
         else
         {
-            if(isset($_SESSION['logged']))
-           {
-                $this->vistaaceptado();
-               $this->registrarse();
-                var_dump('Algo ha fallado');
-           }
-           else
-           {
-              $this->vistaaceptado();
-               $this->registrarse();
-                var_dump('Algo ha fallado');
-           }
+            $this->vistaaceptado();
+            $this->registrarse();
+        }
+        
+     }
+     }
+  public function registro()
+  {
+      $this->includes();
+     $guardar_usuario= $this->validar();
+     
+     if($guardar_usuario['saber']==true)
+     {
+         $nif=$_POST['nif'] ;
+        $nombre= $_POST['nombre'] ;
+        $apellido1= $_POST['apellido1'] ;
+        $apellido2= $_POST['apellido2'] ;
+        $email= $_POST['email'] ;
+        $password= sha1($_POST['password'] );
+        $telefonomovil=$_POST['telefonomovil'] ;
+        $telefonofijo=$_POST['telefonofijo'] ;
+        $departamento=$_POST['departamento'] ;
+        $paginaweb=$_POST['paginaweb'] ;
+        $direccionblog=$_POST['direccionblog'] ;
+        $cuentatwitter=$_POST['cuentatwitter'] ;
+        $usuariologin= $_POST['usuariologin'] ;
+        $foto=$guardar_usuario['nombrecompleto'];
+        
+         $resultado= $this->modelo->insertarregistro($nif, $nombre, $apellido1, $apellido2, $password, $telefonomovil, $telefonofijo, $email, $departamento, $paginaweb, $direccionblog, $cuentatwitter,$usuariologin,$foto);
+            
+        if($resultado == true)
+        {
            
+                $_SESSION['errores']['registradoexito']='<strong>FELICIDADES!</strong>Felicidades te has registrado.';
+               $this->index();
+        }
+        else
+        {
+            $this->registrarse();
         }
         
      }
@@ -235,7 +266,7 @@ class controlador {
   
   public function modificar()
   {
-     
+      $this->includes();
      $guardar_usuario= $this->validar();
      
      if($guardar_usuario['saber']==true)
@@ -259,9 +290,9 @@ class controlador {
         
         if($resultado==true)
         {
-            
-             $this->listarusuarios();
-             var_dump('Felicidades se ha actualizado!');
+            $_SESSION['errores']['modificaciones']='<strong>FELICIDADES!</strong>Se ha actualizado correctamente!';
+            $this->listarusuarios();
+             
         }
         else
         {
@@ -305,6 +336,7 @@ class controlador {
       
       public function actualizarperfil()
   {
+      $this->includes();
       $guardar_usuario= $this->validar();
      
      if($guardar_usuario['saber']==true)
@@ -331,8 +363,9 @@ class controlador {
         
         if($resultado==true)
         {
+            $_SESSION['errores']['modificaciones']='<strong>FELICIDADES!</strong>Te has actualizado correctamente!';
             $this->vistaaceptadoprofile();
-             var_dump('Felicidades te ha actualizado!');
+           
         }
         else
         {
@@ -651,11 +684,7 @@ class controlador {
     return $usuario_valido;
   }
   
-  public function adminregistrando()
-  {
-      $this->vistaaceptado();
-      $this->registrarse();
-  }
+ 
   }
   
   

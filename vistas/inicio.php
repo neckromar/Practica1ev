@@ -44,6 +44,7 @@
                         </div>
                     </form>
                  <span ><?php  echo isset($_SESSION['errores']) ?  mostrarError($_SESSION['errores'],'noaceptado'):"" ?></span>
+                 <span ><?php  echo isset($_SESSION['errores']) ?  mostrarError($_SESSION['errores'],'registradoexito',true):"" ?></span>
                 <?php borrarErrores() ?>
             </div>
         </div>

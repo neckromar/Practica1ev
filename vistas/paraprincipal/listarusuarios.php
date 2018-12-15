@@ -3,7 +3,7 @@
     
                 <div class="card-body">
                     
-                    
+                    <span ><?php  echo isset($_SESSION['errores']) ?  mostrarError($_SESSION['errores'],'modificaciones',true):"" ?></span>
                     <?php  
                     //Limito la busqueda 
                     
@@ -65,6 +65,6 @@
                 </div>
     
        </div>
-       
+       <?php borrarErrores() ?>
     </body>
     </html>

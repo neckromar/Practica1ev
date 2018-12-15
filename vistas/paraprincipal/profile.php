@@ -1,8 +1,9 @@
 
   
-  
+   
+                    
       <div class="container" style="width:20%;margin-top:5%">
-    
+          <span ><?php  echo isset($_SESSION['errores']) ?  mostrarError($_SESSION['errores'],'modificaciones',true):"" ?></span>
                 <div class="card-body">
                     <?php  if(isset($_SESSION["logged"])){
                          echo '<h3 class="card-title"> BIENVENIDO !!<br> '. $_SESSION["logged"]["Nombre"].' '.$_SESSION["logged"]["Apellido1"].'  '.$_SESSION["logged"]["Apellido2"].'</h3>';
@@ -18,6 +19,7 @@
               <?php  echo  '  <a class="btn btn-warning btn-lg" href="index.php?accion=modificarmeami&ID='.$_SESSION["logged"]['ID'].'" role="button">Modificarme</a>';?> 
           </div>
        </div>
- 
+    
+    <?php borrarErrores() ?>
        </body>
 </html>
