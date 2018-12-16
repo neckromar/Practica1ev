@@ -19,7 +19,7 @@
              <?php  if(isset($_SESSION["logged"]) && $_SESSION["logged"]['Usuario']=='Administrador'){
             
                      echo'<li class="nav-item dropdown">';
-                     echo'<a class="nav-link " href="index.php?accion=listarusuarios" id="navbarDropdown"  aria-haspopup="true" aria-expanded="false">';
+                     echo'<a class="nav-link " href="index.php?accion=listarusuarios&pagina=1" id="navbarDropdown"  aria-haspopup="true" aria-expanded="false">';
                      echo'<i class="fas fa-user"></i> Listas Usuarios Activos </a>';
                     echo' </li>';
              }?>
@@ -27,7 +27,7 @@
            <?php  if(isset($_SESSION["logged"]) && $_SESSION["logged"]['Usuario']=='Administrador'){
             
                   echo'<li class="nav-item dropdown">';
-                  echo'<a class="nav-link " href="index.php?accion=solicitudesusuarios" id="navbarDropdown"  aria-haspopup="true" aria-expanded="false">';
+                  echo'<a class="nav-link " href="index.php?accion=solicitudesusuarios&pagina=1" id="navbarDropdown"  aria-haspopup="true" aria-expanded="false">';
                   echo '<i class="fas fa-user"></i> Solicitudes Usuarios </a>';
                   echo'</li>';
                

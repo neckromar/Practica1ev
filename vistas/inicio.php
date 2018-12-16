@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
     <title><?= $parametros["tituloventana"] ?></title>
-  <head>
-      
-  </head>
   
   <body  >
       
@@ -13,8 +10,9 @@
         <div class='col-md-3'></div>
         <div class="col-md-6">
             <div class="login-box well">
+                 <img  class="rounded-circle mx-auto d-block" src="images//fotologoinstituto.jpg"   />
                 <form action="index.php?accion=loginaceptado" method="POST" enctype="multipart/form-data">
-                        <img  class="alineadoTextoImagen" src="images//login.png"   />
+                       
                          <br><br>
                         <div class="form-group">
                             <label for="usuario">Usuario</label>

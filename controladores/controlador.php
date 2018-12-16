@@ -60,7 +60,7 @@ class controlador {
     
     
     
-  
+  // vista principal al ser logueado
    public function vistaaceptado() {
       $parametros = [
         "tituloventana" => "Bienvenido"
@@ -100,6 +100,8 @@ class controlador {
     $this->includes();
     include_once 'vistas/paraprincipal/modificaruser.php';
   }
+  
+  //llama a la vista de solicitudes de usuarios
   public function solicitudes() {
     
      
@@ -108,6 +110,7 @@ class controlador {
     include_once 'vistas/paraprincipal/solicitudesusuarios.php';
   }
   
+  // la vista para modificarse  a si mismo
   public function modificarmeprofile() {
     
      
@@ -115,6 +118,8 @@ class controlador {
     $this->includes();
     include_once 'vistas/paraprincipal/modificarme.php';
   }
+  
+  //vista correo
   public function vistaenviocorreos() {
     
      
@@ -123,7 +128,7 @@ class controlador {
     include_once 'vistas/paraprincipal/enviocorreos.php';
   }
   
-  
+  // funcion para loguearte
  public function loginaceptado() {
      $this->includes();
     $usuario_valido=$this->validarlogininsertado();
@@ -166,33 +171,34 @@ class controlador {
   
   
 
-  
+  // muestra la vista  de listar usuarios positivos pasandole los valores del modelo
   public function listarusuarios()
   {
-        $resultado= $this->modelo->listarusuarios();
+        
+        $pagina= isset($_GET['pagina']) ? (int)$_GET['pagina'] :1;
+        $resultado= $this->modelo->listarusuarios($pagina);
          
         $_SESSION["listado"]=$resultado;
+        $_SESSION["pagina"]=$pagina;
         $this->vistaaceptadolistar();
         
-        /*if(isset($_GET['pagina']) && is_numeric($_GET['pagina']))
-        {
-            $resultado_mod= $this->modelo->listar($_GET['pagina']);
-        }
-        else
-        {
-            header("Location: index.php?accion=listarusuarios&pagina=1");
-        }
-        */
    }
+   
+   // muestra la vista  de solicitudes de usuarios  pasandole los valores del modelo
    public function solicitudesusuarios()
   {
-        $resultado= $this->modelo->solicitudesusuarios();
+        $pagina= isset($_GET['pagina']) ? (int)$_GET['pagina'] :1;
+        $resultado= $this->modelo->solicitudesusuarios($pagina);
          
         $_SESSION["solicitudes"]=$resultado;
+        $_SESSION["paginasol"]=$pagina;
+
         $this->solicitudes();
                
         
      }
+     
+     // la funcion que se encarga de recoger los datos de la consulta con todos los correos y demas y pasarla a la vista del envio de correo
      public function  enviocorreos()
      {
          $resultado= $this->modelo->recogertodosloscorreos();
@@ -200,7 +206,7 @@ class controlador {
          $this->vistaenviocorreos();
      }
 
-
+//funcion que  permite al admin registrar un usuario
      public function registrodeladmin() {
          
       $this->includes();
@@ -238,6 +244,8 @@ class controlador {
         
      }
      }
+     
+  // funcion que permite a cualquier usuario registrarse   
   public function registro()
   {
       $this->includes();
@@ -277,8 +285,10 @@ class controlador {
      
   }
   
+  // funcion que permite al admin modificar en la lista de usuarios
   public function modificar()
   {
+      $pagina= isset($_GET['pagina']) ? (int)$_GET['pagina'] :1;
       $this->includes();
      $guardar_usuario= $this->validar();
      
@@ -303,7 +313,7 @@ class controlador {
         
         if($resultado==true)
         {
-            $this->listarusuarios();
+            $this->listarusuarios($pagina);
             $_SESSION['errores']['modificaciones']='<strong>FELICIDADES!</strong>Se ha actualizado correctamente!';
         }
         else
@@ -314,8 +324,8 @@ class controlador {
        
       }
   }
-      
-      public function getmodificar()
+     // recoge por parametro get el id del usuario para asi devolver todos sus campos a la hora de modificarlo 
+ public function getmodificar()
       {
           
            if(isset($_GET["ID"]) && (is_numeric($_GET['ID'])))
@@ -331,6 +341,7 @@ class controlador {
           }
       }
       
+      // recoge por parametro get el id del usuario que se vaya a actualizar a si mismo  para asi devolver todos sus campos a la hora de modificarlo 
       public function modificarmeami()
       {
           
@@ -347,6 +358,7 @@ class controlador {
           }
       }
       
+      // funcion que sirve solamente para actualizarse a si mismo
       public function actualizarperfil()
   {
       $this->includes();
@@ -391,6 +403,7 @@ class controlador {
       }
       }
       
+      // funcion para validad los campos necesario
   public function validar()
   {
     if(isset($_POST))
@@ -650,7 +663,9 @@ class controlador {
     }
     return $guardar_usuario;
   }
-     
+  
+  
+  // funcion para validar los datos del login
   public function validarlogininsertado()
   {
     

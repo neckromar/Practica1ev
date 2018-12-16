@@ -157,46 +157,42 @@ class modelo {
       return $resultado;
   }
 
-  public function listarusuarios(){
+  public function listarusuarios($pagina){
     
       try {
           
-           
-        $sql = "SELECT `ID`, `Nif`, `Nombre`, `Apellido1`, `Apellido2`, `Telefonomovil`, `Telefonofijo`, `Email`, `Departamento`,  `Usuario`, `UsuarioLogin`  FROM usuarios WHERE `Aceptado`=1  ";
-       // $sql_saberfilas="SELECT * FROM usuarios";
-        
-        $query = $this->conexion->query($sql);
-       // $total = $this->conexion->query($sql_saberfilas);
+        $totalporpagina=4;
+       $inicio=($pagina > 1)? ($pagina * $totalporpagina - $totalporpagina):0;
+       
         
          
+        $sql = "SELECT `ID`, `Nif`, `Nombre`, `Apellido1`, `Apellido2`, `Telefonomovil`, `Telefonofijo`, `Email`, `Departamento`,  `Usuario`, `UsuarioLogin`  FROM usuarios WHERE `Aceptado`=1 LIMIT $inicio,$totalporpagina  ";
+      
+        $query = $this->conexion->prepare($sql);
+        $query->execute();
         
-        
-        
-        //Supervisamos que la consulta se realizó correctamente... 
         $fila = $query->fetchAll(PDO::FETCH_ASSOC);
-       // $total=$total->fetchAll(PDO::FETCH_ASSOC);
         
-      /*  $pagina = $_GET["pagina"]; 
-                    if (!$pagina) 
-                        { 
-                            $inicio = 0; 
-                             $pagina=1; 
-                        } 
-                     else 
-                         { 
-                             $inicio = ($pagina - 1) * $TAMANO_PAGINA; 
-                        }
-           
-                       
-                        $num_total_registros =count($total);
-                         //calculo el total de páginas 
-                        $total_paginas = ceil($num_total_registros / $TAMANO_PAGINA);
-         */       
+        
+        $sql_saberfilas="SELECT count(*) as total";
+         $total = $this->conexion->query($sql_saberfilas);
+         $total=$total->fetch()['total'];
+        
+         
+         $numeropaginas=ceil($total+1/$totalporpagina);
+         
+        
+       $arraylistado= array();
+        
+       $arraylistado['fila']=$fila;
+       $arraylistado['total']=$numeropaginas;
+        
+      
         
          if($query)
             {
                  
-               $resultado=$fila;
+               $resultado= $arraylistado;
             }
          else
             {
@@ -210,18 +206,34 @@ class modelo {
 
     return $resultado;
   }
-  public function solicitudesusuarios() {
+  public function solicitudesusuarios($pagina) {
     
       try {
-        $sql = "SELECT `ID`, `Nif`, `Nombre`, `Apellido1`, `Apellido2`, `Telefonomovil`, `Telefonofijo`, `Email`, `Departamento`,  `Usuario`, `UsuarioLogin`, `Aceptado`  FROM usuarios WHERE `Aceptado`=0 ";
-        $query = $this->conexion->query($sql);
-        
+          
+           $totalporpagina=4;
+           $inicio=($pagina > 1)? ($pagina * $totalporpagina - $totalporpagina):0;
+          
+        $sql = "SELECT `ID`, `Nif`, `Nombre`, `Apellido1`, `Apellido2`, `Telefonomovil`, `Telefonofijo`, `Email`, `Departamento`,  `Usuario`, `UsuarioLogin`, `Aceptado`  FROM usuarios WHERE `Aceptado`=0 LIMIT $inicio,$totalporpagina";
+         $query = $this->conexion->prepare($sql);
+        $query->execute();
         //Supervisamos que la consulta se realizó correctamente... 
         $fila = $query->fetchAll(PDO::FETCH_ASSOC);
+        
+        
+         $sql_saberfilas="SELECT count(*) as total";
+         $total = $this->conexion->query($sql_saberfilas);
+         $total=$total->fetch()['total'];
+        
+        $numeropaginas=ceil($total/$totalporpagina);
+        
+        $arraylistado= array();
+        
+        $arraylistado['fila']=$fila;
+         $arraylistado['total']=$numeropaginas;
              if($query)
                 {
                  
-                    $resultado=$fila;
+                    $resultado= $arraylistado;
                 }
             else
                 {
