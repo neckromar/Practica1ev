@@ -12,7 +12,7 @@
     <div id="wrapper" class="animate">
     <nav class="navbar header-top fixed-top navbar-expand-lg navbar-dark bg-dark">
       
-      <a class="navbar-brand" href="#">LOGO</a>
+        <img src="images//izquierdamoodle.jpg" width="5%">I.E.S. San Sebastian</img>
       
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav animate side-nav">

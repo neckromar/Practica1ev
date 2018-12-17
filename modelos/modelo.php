@@ -407,22 +407,26 @@ public function modificarusuario($id){
 			<th>Nombre</th>
 			<th>Apellidos</th>
 			<th>Móvil</th>
+                        <th>Fijo</th>
+                        <th>Email</th>
+                        <th>Departamento</th>
 			<th>Tipo de Usuario</th>
 			<th>UsuarioLogin</th>
-			<th>Departamento</th>
-			<th>Email</th>
+			
+			
 		</tr>';
 		foreach($listado as $u)
 		{
-			$contenido .= '<tr>
+			$contenido .= '<tr class="table-info">
 			<td>'.$u["Nif"].'</td>
 			<td>'.$u["Nombre"].'</td>
 			<td>'.$u["Apellido1"].' '. $u["Apellido2"].'</td>
 			<td>'.$u["Telefonomovil"] . '</td>
+                        <td>'.$u["Telefonofijo"] . '</td>
+                        <td>'.$u["Email"].'</td>
+                        <td>'.$u["Departamento"].'</td>
 			<td>'.$u["Usuario"].'</td>
 			<td>'.$u["UsuarioLogin"].'</td>
-			<td>'.$u["Departamento"].'</td>
-			<td>'.$u["Email"].'</td>
 			</tr>';
 		}
 		$contenido .= '</table>';
