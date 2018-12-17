@@ -7,9 +7,10 @@
                     <?php  
                     //Limito la busqueda 
                      $pagina=$_SESSION["pagina"];
-
-                     $numeropaginas=$_SESSION["listado"]['total'];
-
+           
+                     $numeroporpaginas=$_SESSION["listado"]['total'];
+                     
+                     $numeropaginas=ceil($numeroporpaginas/4);
                     //examino la página a mostrar y el inicio del registro a mostrar 
                     
                     if(isset($_SESSION["listado"])){
@@ -82,7 +83,12 @@
                   </ul>
                   
               </section>
-               
+             
+          </div>
+          
+          <div>
+              <a class="nav-link"   href="index.php?accion=listados_pdf&aceptado=1" >Generar PDF</a>
+              
           </div>
        </div>
       

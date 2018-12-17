@@ -38,7 +38,12 @@ class controlador {
     //Mostramos la página de inicio 
     include_once 'vistas/inicio.php';
   }
-  
+  public function indexdestroy()
+  {
+      
+     session_destroy();
+    $this->index();
+  }
   public function registrarse() {
     $parametros = [
         "tituloventana" => "Registro"
@@ -712,7 +717,18 @@ class controlador {
     return $usuario_valido;
   }
   
- 
+ public function listados_pdf()
+  {
+	require_once 'pdf/vendor/autoload.php';
+	ob_start();
+    $content = $this->modelo->listados_pdf($_GET['aceptado']);
+    $html2pdf = new Spipu\Html2Pdf\Html2Pdf('P', 'A4', 'es');
+    $html2pdf->pdf->SetDisplayMode('fullpage');
+    $html2pdf->writeHTML($content);
+    $html2pdf->output('listado.pdf');
+  }
+  
+  
   }
   
   

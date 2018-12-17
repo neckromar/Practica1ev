@@ -6,8 +6,12 @@
                         
                         //Limito la busqueda 
                          $pagina=$_SESSION["paginasol"];
+                         $numeroporpaginas=$_SESSION["solicitudes"]['total'];
+                     
+                         $numeropaginas=ceil($numeroporpaginas/4);
+                         
 
-                        $numeropaginas=$_SESSION["listado"]['total'];
+                        
                         
                          echo '<table border=1 class="table" ><tr class="table-primary">';
                          if(count($_SESSION["solicitudes"]['fila'])!= 0)
@@ -79,6 +83,11 @@
                   
               </section>
                
+          </div>
+    
+          <div>
+              <a href="index.php?accion=listados_pdf&aceptado=0" >Generar PDF</a>
+              
           </div>
        </div>
        

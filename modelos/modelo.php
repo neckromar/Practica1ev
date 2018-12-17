@@ -160,7 +160,7 @@ class modelo {
   public function listarusuarios($pagina){
     
       try {
-          
+        $arraylistado= array();
         $totalporpagina=4;
        $inicio=($pagina > 1)? ($pagina * $totalporpagina - $totalporpagina):0;
        
@@ -174,18 +174,13 @@ class modelo {
         $fila = $query->fetchAll(PDO::FETCH_ASSOC);
         
         
-        $sql_saberfilas="SELECT count(*) as total";
-         $total = $this->conexion->query($sql_saberfilas);
-         $total=$total->fetch()['total'];
+        $sql_saberfilas="SELECT count(*) as total FROM usuarios WHERE `Aceptado`=1";
+        $sql_tot = $this->conexion->prepare($sql_saberfilas);
+        $sql_tot->execute();
         
-         
-         $numeropaginas=ceil($total+1/$totalporpagina);
-         
-        
-       $arraylistado= array();
+        $arraylistado=$sql_tot->fetch(PDO::FETCH_ASSOC);
         
        $arraylistado['fila']=$fila;
-       $arraylistado['total']=$numeropaginas;
         
       
         
@@ -209,7 +204,7 @@ class modelo {
   public function solicitudesusuarios($pagina) {
     
       try {
-          
+           $arraylistado= array();
            $totalporpagina=4;
            $inicio=($pagina > 1)? ($pagina * $totalporpagina - $totalporpagina):0;
           
@@ -220,16 +215,17 @@ class modelo {
         $fila = $query->fetchAll(PDO::FETCH_ASSOC);
         
         
-         $sql_saberfilas="SELECT count(*) as total";
-         $total = $this->conexion->query($sql_saberfilas);
-         $total=$total->fetch()['total'];
+         $sql_saberfilas="SELECT count(*) as total FROM usuarios WHERE `Aceptado`=0";
+        $sql_tot = $this->conexion->prepare($sql_saberfilas);
+        $sql_tot->execute();
         
-        $numeropaginas=ceil($total/$totalporpagina);
+        $arraylistado=$sql_tot->fetch(PDO::FETCH_ASSOC);
+         
         
-        $arraylistado= array();
+       
         
         $arraylistado['fila']=$fila;
-         $arraylistado['total']=$numeropaginas;
+         
              if($query)
                 {
                  
@@ -382,4 +378,62 @@ public function modificarusuario($id){
 
     return $resultado;
   }
+  
+  public function listados_pdf($tipo) {
+    try {
+		if($tipo == "1")
+		{
+			$sql = "SELECT * FROM usuarios WHERE Aceptado = 1";
+		}
+		else
+		{
+			$sql = "SELECT * FROM usuarios WHERE Aceptado = 0";
+		}
+		$query = $this->conexion->query($sql);
+		
+      //Supervisamos si la consulta se hizo correctamente
+      if (isset($query))
+      {
+        $listado = $query->fetchAll(PDO::FETCH_ASSOC);
+		$contenido = "";
+		if($tipo == "aceptado") :
+			$contenido .= '<h1>Listado de usuarios activos</h1><br>';
+		else :
+			$contenido .= '<h1>Listado de usuarios inactivos</h1><br>';
+		endif;
+		$contenido .= '<table cellspacing="1" border="1">';
+		$contenido .= '<tr>
+			<th>NIF</th>
+			<th>Nombre</th>
+			<th>Apellidos</th>
+			<th>Móvil</th>
+			<th>Tipo de Usuario</th>
+			<th>UsuarioLogin</th>
+			<th>Departamento</th>
+			<th>Email</th>
+		</tr>';
+		foreach($listado as $u)
+		{
+			$contenido .= '<tr>
+			<td>'.$u["Nif"].'</td>
+			<td>'.$u["Nombre"].'</td>
+			<td>'.$u["Apellido1"].' '. $u["Apellido2"].'</td>
+			<td>'.$u["Telefonomovil"] . '</td>
+			<td>'.$u["Usuario"].'</td>
+			<td>'.$u["UsuarioLogin"].'</td>
+			<td>'.$u["Departamento"].'</td>
+			<td>'.$u["Email"].'</td>
+			</tr>';
+		}
+		$contenido .= '</table>';
+      }
+      else
+          $contenido = false;
+    } catch (PDOException $ex) {
+      $contenido = $ex->getMessage();
+    }
+
+    return $contenido;
+  }
+  
 }

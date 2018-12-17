@@ -51,12 +51,8 @@
                
            }?>
           
-          
-          
-          <li class="nav-item">
-                <a class="nav-link" href="#" title="Comment"><i class="fas fa-comment"></i> Comment </a>
-          </li>
-          
+            
+            
         </ul>
         <ul class="navbar-nav ml-md-auto d-md-flex">
           <li class="nav-item">
@@ -68,7 +64,7 @@
               
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="index.php?accion=index"><i class="fas fa-key"></i> Logout</a>
+              <a class="nav-link" href="index.php?accion=indexdestroy"><i class="fas fa-key"></i> Logout</a>
           </li>
         </ul>
       </div>
