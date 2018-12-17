@@ -407,7 +407,6 @@ public function modificarusuario($id){
 			<th>Nombre</th>
 			<th>Apellidos</th>
 			<th>Móvil</th>
-                        <th>Fijo</th>
                         <th>Email</th>
                         <th>Departamento</th>
 			<th>Tipo de Usuario</th>
@@ -422,7 +421,6 @@ public function modificarusuario($id){
 			<td>'.$u["Nombre"].'</td>
 			<td>'.$u["Apellido1"].' '. $u["Apellido2"].'</td>
 			<td>'.$u["Telefonomovil"] . '</td>
-                        <td>'.$u["Telefonofijo"] . '</td>
                         <td>'.$u["Email"].'</td>
                         <td>'.$u["Departamento"].'</td>
 			<td>'.$u["Usuario"].'</td>
